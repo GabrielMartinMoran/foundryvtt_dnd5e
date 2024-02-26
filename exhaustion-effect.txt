@@ -1,0 +1,9 @@
+system.bonuses.abilities.save
+system.bonuses.abilities.check
+system.bonuses.spell.dc
+system.bonuses.mwak.attack
+system.bonuses.rwak.attack
+system.bonuses.msak.attack
+system.bonuses.rsak.attack
+
+Add -@attributes.exhaustion

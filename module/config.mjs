@@ -38,45 +38,51 @@ DND5E.abilities = {
     abbreviation: "DND5E.AbilityStrAbbr",
     type: "physical",
     fullKey: "strength",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.nUPv6C66Ur64BIUH"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.nUPv6C66Ur64BIUH",
   },
   dex: {
     label: "DND5E.AbilityDex",
     abbreviation: "DND5E.AbilityDexAbbr",
     type: "physical",
     fullKey: "dexterity",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ER8CKDUWLsFXuARJ"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ER8CKDUWLsFXuARJ",
   },
   con: {
     label: "DND5E.AbilityCon",
     abbreviation: "DND5E.AbilityConAbbr",
     type: "physical",
     fullKey: "constitution",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MpA4jnwD17Q0RPg7"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MpA4jnwD17Q0RPg7",
   },
   int: {
     label: "DND5E.AbilityInt",
     abbreviation: "DND5E.AbilityIntAbbr",
     type: "mental",
     fullKey: "intelligence",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.WzWWcTIppki35YvF",
-    defaults: { vehicle: 0 }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.WzWWcTIppki35YvF",
+    defaults: { vehicle: 0 },
   },
   wis: {
     label: "DND5E.AbilityWis",
     abbreviation: "DND5E.AbilityWisAbbr",
     type: "mental",
     fullKey: "wisdom",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v3IPyTtqvXqN934s",
-    defaults: { vehicle: 0 }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v3IPyTtqvXqN934s",
+    defaults: { vehicle: 0 },
   },
   cha: {
     label: "DND5E.AbilityCha",
     abbreviation: "DND5E.AbilityChaAbbr",
     type: "mental",
     fullKey: "charisma",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9FyghudYFV5QJOuG",
-    defaults: { vehicle: 0 }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9FyghudYFV5QJOuG",
+    defaults: { vehicle: 0 },
   },
   hon: {
     label: "DND5E.AbilityHon",
@@ -84,7 +90,7 @@ DND5E.abilities = {
     type: "mental",
     fullKey: "honor",
     defaults: { npc: "cha", vehicle: 0 },
-    improvement: false
+    improvement: false,
   },
   san: {
     label: "DND5E.AbilitySan",
@@ -92,8 +98,8 @@ DND5E.abilities = {
     type: "mental",
     fullKey: "sanity",
     defaults: { npc: "wis", vehicle: 0 },
-    improvement: false
-  }
+    improvement: false,
+  },
 };
 preLocalize("abilities", { keys: ["label", "abbreviation"] });
 
@@ -106,42 +112,42 @@ preLocalize("abilities", { keys: ["label", "abbreviation"] });
 DND5E.defaultAbilities = {
   initiative: "dex",
   hitPoints: "con",
-  concentration: "con"
+  concentration: "con",
 };
 
 Object.defineProperties(DND5E, {
   hitPointsAbility: {
-    get: function() {
+    get: function () {
       foundry.utils.logCompatibilityWarning(
         "DND5E.hitPointsAbility has been deprecated and is now accessible through DND5E.defaultAbilities.hitPoints.",
         { since: "DnD5e 3.1", until: "DnD5e 3.3" }
       );
       return DND5E.defaultAbilities.hitPoints;
     },
-    set: function(value) {
+    set: function (value) {
       foundry.utils.logCompatibilityWarning(
         "DND5E.hitPointsAbility has been deprecated and is now accessible through DND5E.defaultAbilities.hitPoints.",
         { since: "DnD5e 3.1", until: "DnD5e 3.3" }
       );
       DND5E.defaultAbilities.hitPoints = value;
-    }
+    },
   },
   initiativeAbility: {
-    get: function() {
+    get: function () {
       foundry.utils.logCompatibilityWarning(
         "DND5E.initiativeAbility has been deprecated and is now accessible through DND5E.defaultAbilities.initiative.",
         { since: "DnD5e 3.1", until: "DnD5e 3.3" }
       );
       return DND5E.defaultAbilities.initiative;
     },
-    set: function(value) {
+    set: function (value) {
       foundry.utils.logCompatibilityWarning(
         "DND5E.initiativeAbility has been deprecated and is now accessible through DND5E.defaultAbilities.initiative.",
         { since: "DnD5e 3.1", until: "DnD5e 3.3" }
       );
       DND5E.defaultAbilities.initiative = value;
-    }
-  }
+    },
+  },
 });
 
 /* -------------------------------------------- */
@@ -165,128 +171,146 @@ DND5E.skills = {
     label: "DND5E.SkillAcr",
     ability: "dex",
     fullKey: "acrobatics",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AvvBLEHNl7kuwPkN",
-    icon: "icons/equipment/feet/shoes-simple-leaf-green.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AvvBLEHNl7kuwPkN",
+    icon: "icons/equipment/feet/shoes-simple-leaf-green.webp",
   },
   ani: {
     label: "DND5E.SkillAni",
     ability: "wis",
     fullKey: "animalHandling",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xb3MCjUvopOU4viE",
-    icon: "icons/environment/creatures/horse-brown.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xb3MCjUvopOU4viE",
+    icon: "icons/environment/creatures/horse-brown.webp",
   },
   arc: {
     label: "DND5E.SkillArc",
     ability: "int",
     fullKey: "arcana",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.h3bYSPge8IOqne1N",
-    icon: "icons/sundries/books/book-embossed-jewel-silver-green.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.h3bYSPge8IOqne1N",
+    icon: "icons/sundries/books/book-embossed-jewel-silver-green.webp",
   },
   ath: {
     label: "DND5E.SkillAth",
     ability: "str",
     fullKey: "athletics",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rIR7ttYDUpH3tMzv",
-    icon: "icons/magic/control/buff-strength-muscle-damage-orange.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rIR7ttYDUpH3tMzv",
+    icon: "icons/magic/control/buff-strength-muscle-damage-orange.webp",
   },
   dec: {
     label: "DND5E.SkillDec",
     ability: "cha",
     fullKey: "deception",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.mqVZ2fz0L7a9VeKJ",
-    icon: "icons/magic/control/mouth-smile-deception-purple.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.mqVZ2fz0L7a9VeKJ",
+    icon: "icons/magic/control/mouth-smile-deception-purple.webp",
   },
   his: {
     label: "DND5E.SkillHis",
     ability: "int",
     fullKey: "history",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kRBZbdWMGW9K3wdY",
-    icon: "icons/sundries/books/book-embossed-bound-brown.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kRBZbdWMGW9K3wdY",
+    icon: "icons/sundries/books/book-embossed-bound-brown.webp",
   },
   ins: {
     label: "DND5E.SkillIns",
     ability: "wis",
     fullKey: "insight",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8R5SMbAGbECNgO8z",
-    icon: "icons/magic/perception/orb-crystal-ball-scrying-blue.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8R5SMbAGbECNgO8z",
+    icon: "icons/magic/perception/orb-crystal-ball-scrying-blue.webp",
   },
   itm: {
     label: "DND5E.SkillItm",
     ability: "cha",
     fullKey: "intimidation",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4VHHI2gJ1jEsppfg",
-    icon: "icons/skills/social/intimidation-impressing.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4VHHI2gJ1jEsppfg",
+    icon: "icons/skills/social/intimidation-impressing.webp",
   },
   inv: {
     label: "DND5E.SkillInv",
     ability: "int",
     fullKey: "investigation",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Y7nmbQAruWOs7WRM",
-    icon: "icons/tools/scribal/magnifying-glass.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Y7nmbQAruWOs7WRM",
+    icon: "icons/tools/scribal/magnifying-glass.webp",
   },
   med: {
     label: "DND5E.SkillMed",
     ability: "wis",
     fullKey: "medicine",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GeYmM7BVfSCAga4o",
-    icon: "icons/tools/cooking/mortar-herbs-yellow.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GeYmM7BVfSCAga4o",
+    icon: "icons/tools/cooking/mortar-herbs-yellow.webp",
   },
   nat: {
     label: "DND5E.SkillNat",
     ability: "int",
     fullKey: "nature",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ueMx3uF2PQlcye31",
-    icon: "icons/magic/nature/plant-sprout-snow-green.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ueMx3uF2PQlcye31",
+    icon: "icons/magic/nature/plant-sprout-snow-green.webp",
   },
   prc: {
     label: "DND5E.SkillPrc",
     ability: "wis",
     fullKey: "perception",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zjEeHCUqfuprfzhY",
-    icon: "icons/magic/perception/eye-ringed-green.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zjEeHCUqfuprfzhY",
+    icon: "icons/magic/perception/eye-ringed-green.webp",
   },
   prf: {
     label: "DND5E.SkillPrf",
     ability: "cha",
     fullKey: "performance",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hYT7Z06yDNBcMtGe",
-    icon: "icons/tools/instruments/lute-gold-brown.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hYT7Z06yDNBcMtGe",
+    icon: "icons/tools/instruments/lute-gold-brown.webp",
   },
   per: {
     label: "DND5E.SkillPer",
     ability: "cha",
     fullKey: "persuasion",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4R5H8iIsdFQTsj3X",
-    icon: "icons/skills/social/diplomacy-handshake.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4R5H8iIsdFQTsj3X",
+    icon: "icons/skills/social/diplomacy-handshake.webp",
   },
   rel: {
     label: "DND5E.SkillRel",
     ability: "int",
     fullKey: "religion",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.CXVzERHdP4qLhJXM",
-    icon: "icons/magic/holy/saint-glass-portrait-halo.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.CXVzERHdP4qLhJXM",
+    icon: "icons/magic/holy/saint-glass-portrait-halo.webp",
   },
   slt: {
     label: "DND5E.SkillSlt",
     ability: "dex",
     fullKey: "sleightOfHand",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.yg6SRpGNVz9nDW0A",
-    icon: "icons/sundries/gaming/playing-cards.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.yg6SRpGNVz9nDW0A",
+    icon: "icons/sundries/gaming/playing-cards.webp",
   },
   ste: {
     label: "DND5E.SkillSte",
     ability: "dex",
     fullKey: "stealth",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4MfrpERNiQXmvgCI",
-    icon: "icons/magic/perception/shadow-stealth-eyes-purple.webp"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4MfrpERNiQXmvgCI",
+    icon: "icons/magic/perception/shadow-stealth-eyes-purple.webp",
   },
   sur: {
     label: "DND5E.SkillSur",
     ability: "wis",
     fullKey: "survival",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.t3EzDU5b9BVAIEVi",
-    icon: "icons/magic/fire/flame-burning-campfire-yellow-blue.webp"
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.t3EzDU5b9BVAIEVi",
+    icon: "icons/magic/fire/flame-burning-campfire-yellow-blue.webp",
+  },
 };
 preLocalize("skills", { key: "label", sort: true });
 
@@ -305,7 +329,7 @@ DND5E.alignments = {
   cn: "DND5E.AlignmentCN",
   le: "DND5E.AlignmentLE",
   ne: "DND5E.AlignmentNE",
-  ce: "DND5E.AlignmentCE"
+  ce: "DND5E.AlignmentCE",
 };
 preLocalize("alignments");
 
@@ -318,7 +342,7 @@ preLocalize("alignments");
 DND5E.attunementTypes = {
   NONE: 0,
   REQUIRED: 1,
-  ATTUNED: 2
+  ATTUNED: 2,
 };
 
 /**
@@ -328,7 +352,7 @@ DND5E.attunementTypes = {
 DND5E.attunements = {
   0: "DND5E.AttunementNone",
   1: "DND5E.AttunementRequired",
-  2: "DND5E.AttunementAttuned"
+  2: "DND5E.AttunementAttuned",
 };
 preLocalize("attunements");
 
@@ -340,7 +364,7 @@ preLocalize("attunements");
  */
 DND5E.weaponProficiencies = {
   sim: "DND5E.WeaponSimpleProficiency",
-  mar: "DND5E.WeaponMartialProficiency"
+  mar: "DND5E.WeaponMartialProficiency",
 };
 preLocalize("weaponProficiencies");
 
@@ -353,7 +377,7 @@ DND5E.weaponProficienciesMap = {
   simpleM: "sim",
   simpleR: "sim",
   martialM: "mar",
-  martialR: "mar"
+  martialR: "mar",
 };
 
 /**
@@ -398,7 +422,7 @@ DND5E.weaponIds = {
   trident: "F65ANO66ckP8FDMa",
   warpick: "2YdfjN1PIIrSHZii",
   warhammer: "F0Df164Xv1gWcYt0",
-  whip: "QKTyxoO0YDnAsbYe"
+  whip: "QKTyxoO0YDnAsbYe",
 };
 
 /* -------------------------------------------- */
@@ -411,7 +435,7 @@ DND5E.ammoIds = {
   arrow: "3c7JXOzsv55gqJS5",
   blowgunNeedle: "gBQ8xqTA5f8wP5iu",
   crossbowBolt: "SItCnYBqhzqBoaWG",
-  slingBullet: "z9SbsMIBZzuhZOqT"
+  slingBullet: "z9SbsMIBZzuhZOqT",
 };
 
 /* -------------------------------------------- */
@@ -424,7 +448,7 @@ DND5E.ammoIds = {
 DND5E.toolTypes = {
   art: "DND5E.ToolArtisans",
   game: "DND5E.ToolGamingSet",
-  music: "DND5E.ToolMusicalInstrument"
+  music: "DND5E.ToolMusicalInstrument",
 };
 preLocalize("toolTypes", { sort: true });
 
@@ -435,7 +459,7 @@ preLocalize("toolTypes", { sort: true });
  */
 DND5E.toolProficiencies = {
   ...DND5E.toolTypes,
-  vehicle: "DND5E.ToolVehicle"
+  vehicle: "DND5E.ToolVehicle",
 };
 preLocalize("toolProficiencies", { sort: true });
 
@@ -480,7 +504,7 @@ DND5E.toolIds = {
   tinker: "0d08g1i5WXnNrCNA",
   viol: "baoe3U5BfMMMxhCU",
   weaver: "ap9prThUB2y9lDyj",
-  woodcarver: "xKErqkLo4ASYr5EP"
+  woodcarver: "xKErqkLo4ASYr5EP",
 };
 
 /* -------------------------------------------- */
@@ -496,7 +520,7 @@ DND5E.scalarTimePeriods = {
   hour: "DND5E.TimeHour",
   day: "DND5E.TimeDay",
   month: "DND5E.TimeMonth",
-  year: "DND5E.TimeYear"
+  year: "DND5E.TimeYear",
 };
 preLocalize("scalarTimePeriods");
 
@@ -509,7 +533,7 @@ preLocalize("scalarTimePeriods");
 DND5E.permanentTimePeriods = {
   disp: "DND5E.TimeDisp",
   dstr: "DND5E.TimeDispTrig",
-  perm: "DND5E.TimePerm"
+  perm: "DND5E.TimePerm",
 };
 preLocalize("permanentTimePeriods");
 
@@ -521,7 +545,7 @@ preLocalize("permanentTimePeriods");
  */
 DND5E.specialTimePeriods = {
   inst: "DND5E.TimeInst",
-  spec: "DND5E.Special"
+  spec: "DND5E.Special",
 };
 preLocalize("specialTimePeriods");
 
@@ -534,7 +558,7 @@ preLocalize("specialTimePeriods");
 DND5E.timePeriods = {
   ...DND5E.specialTimePeriods,
   ...DND5E.permanentTimePeriods,
-  ...DND5E.scalarTimePeriods
+  ...DND5E.scalarTimePeriods,
 };
 preLocalize("timePeriods");
 
@@ -546,7 +570,7 @@ preLocalize("timePeriods");
  */
 DND5E.staticAbilityActivationTypes = {
   none: "DND5E.NoneActionLabel",
-  special: DND5E.timePeriods.spec
+  special: DND5E.timePeriods.spec,
 };
 
 /**
@@ -564,7 +588,7 @@ DND5E.abilityActivationTypes = {
   legendary: "DND5E.LegendaryActionLabel",
   mythic: "DND5E.MythicActionLabel",
   lair: "DND5E.LairActionLabel",
-  crew: "DND5E.VehicleCrewAction"
+  crew: "DND5E.VehicleCrewAction",
 };
 preLocalize("abilityActivationTypes");
 
@@ -579,7 +603,7 @@ DND5E.abilityConsumptionTypes = {
   attribute: "DND5E.ConsumeAttribute",
   hitDice: "DND5E.ConsumeHitDice",
   material: "DND5E.ConsumeMaterial",
-  charges: "DND5E.ConsumeCharges"
+  charges: "DND5E.ConsumeCharges",
 };
 preLocalize("abilityConsumptionTypes", { sort: true });
 
@@ -604,35 +628,35 @@ DND5E.actorSizes = {
     label: "DND5E.SizeTiny",
     abbreviation: "DND5E.SizeTinyAbbr",
     token: 0.5,
-    capacityMultiplier: 0.5
+    capacityMultiplier: 0.5,
   },
   sm: {
     label: "DND5E.SizeSmall",
     abbreviation: "DND5E.SizeSmallAbbr",
-    dynamicTokenScale: 0.8
+    dynamicTokenScale: 0.8,
   },
   med: {
     label: "DND5E.SizeMedium",
-    abbreviation: "DND5E.SizeMediumAbbr"
+    abbreviation: "DND5E.SizeMediumAbbr",
   },
   lg: {
     label: "DND5E.SizeLarge",
     abbreviation: "DND5E.SizeLargeAbbr",
     token: 2,
-    capacityMultiplier: 2
+    capacityMultiplier: 2,
   },
   huge: {
     label: "DND5E.SizeHuge",
     abbreviation: "DND5E.SizeHugeAbbr",
     token: 3,
-    capacityMultiplier: 4
+    capacityMultiplier: 4,
   },
   grg: {
     label: "DND5E.SizeGargantuan",
     abbreviation: "DND5E.SizeGargantuanAbbr",
     token: 4,
-    capacityMultiplier: 8
-  }
+    capacityMultiplier: 8,
+  },
 };
 preLocalize("actorSizes", { keys: ["label", "abbreviation"] });
 patchConfig("actorSizes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
@@ -652,7 +676,7 @@ Object.defineProperty(DND5E, "tokenSizes", {
       obj[k] = v.token ?? 1;
       return obj;
     }, {});
-  }
+  },
 });
 
 /* -------------------------------------------- */
@@ -664,11 +688,11 @@ Object.defineProperty(DND5E, "tokenSizes", {
  * @enum {number}
  */
 DND5E.tokenHPColors = {
-  damage: 0xFF0000,
-  healing: 0x00FF00,
-  temp: 0x66CCFF,
+  damage: 0xff0000,
+  healing: 0x00ff00,
+  temp: 0x66ccff,
   tempmax: 0x440066,
-  negmax: 0x550000
+  negmax: 0x550000,
 };
 
 /* -------------------------------------------- */
@@ -678,10 +702,10 @@ DND5E.tokenHPColors = {
  * @enum {number}
  */
 DND5E.tokenRingColors = {
-  damage: 0xFF0000,
+  damage: 0xff0000,
   defeated: 0x000000,
-  healing: 0x00FF00,
-  temp: 0x33AAFF
+  healing: 0x00ff00,
+  temp: 0x33aaff,
 };
 
 /* -------------------------------------------- */
@@ -692,12 +716,12 @@ DND5E.tokenRingColors = {
  */
 DND5E.mapLocationMarker = {
   default: {
-    backgroundColor: 0xFBF8F5,
+    backgroundColor: 0xfbf8f5,
     borderColor: 0x000000,
-    borderHoverColor: 0xFF5500,
+    borderHoverColor: 0xff5500,
     font: null,
-    textColor: 0x000000
-  }
+    textColor: 0x000000,
+  },
 };
 
 /* -------------------------------------------- */
@@ -721,95 +745,112 @@ DND5E.creatureTypes = {
     label: "DND5E.CreatureAberration",
     plural: "DND5E.CreatureAberrationPl",
     icon: "/icons/creatures/tentacles/tentacle-eyes-yellow-pink.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.yy50qVC1JhPHt4LC",
-    detectAlignment: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.yy50qVC1JhPHt4LC",
+    detectAlignment: true,
   },
   beast: {
     label: "DND5E.CreatureBeast",
     plural: "DND5E.CreatureBeastPl",
     icon: "/icons/creatures/claws/claw-bear-paw-swipe-red.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6bTHn7pZek9YX2tv"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6bTHn7pZek9YX2tv",
   },
   celestial: {
     label: "DND5E.CreatureCelestial",
     plural: "DND5E.CreatureCelestialPl",
     icon: "/icons/creatures/abilities/wings-birdlike-blue.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.T5CJwxjhBbi6oqaM",
-    detectAlignment: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.T5CJwxjhBbi6oqaM",
+    detectAlignment: true,
   },
   construct: {
     label: "DND5E.CreatureConstruct",
     plural: "DND5E.CreatureConstructPl",
     icon: "/icons/creatures/magical/construct-stone-earth-gray.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jQGAJZBZTqDFod8d"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jQGAJZBZTqDFod8d",
   },
   dragon: {
     label: "DND5E.CreatureDragon",
     plural: "DND5E.CreatureDragonPl",
     icon: "/icons/creatures/abilities/dragon-fire-breath-orange.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.k2IRXZwGk9W0PM2S"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.k2IRXZwGk9W0PM2S",
   },
   elemental: {
     label: "DND5E.CreatureElemental",
     plural: "DND5E.CreatureElementalPl",
     icon: "/icons/creatures/magical/spirit-fire-orange.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.7z1LXGGkXpHuzkFh",
-    detectAlignment: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.7z1LXGGkXpHuzkFh",
+    detectAlignment: true,
   },
   fey: {
     label: "DND5E.CreatureFey",
     plural: "DND5E.CreatureFeyPl",
     icon: "/icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.OFsRUt3pWljgm8VC",
-    detectAlignment: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.OFsRUt3pWljgm8VC",
+    detectAlignment: true,
   },
   fiend: {
     label: "DND5E.CreatureFiend",
     plural: "DND5E.CreatureFiendPl",
     icon: "/icons/magic/death/skull-horned-goat-pentagram-red.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ElHKBJeiJPC7gj6k",
-    detectAlignment: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ElHKBJeiJPC7gj6k",
+    detectAlignment: true,
   },
   giant: {
     label: "DND5E.CreatureGiant",
     plural: "DND5E.CreatureGiantPl",
     icon: "/icons/creatures/magical/humanoid-giant-forest-blue.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AOXn3Mv5vPZwo0Uf"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AOXn3Mv5vPZwo0Uf",
   },
   humanoid: {
     label: "DND5E.CreatureHumanoid",
     plural: "DND5E.CreatureHumanoidPl",
     icon: "/icons/magic/unholy/strike-body-explode-disintegrate.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iFzQs4AenN8ALRvw"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iFzQs4AenN8ALRvw",
   },
   monstrosity: {
     label: "DND5E.CreatureMonstrosity",
     plural: "DND5E.CreatureMonstrosityPl",
     icon: "/icons/creatures/abilities/mouth-teeth-rows-red.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TX0yPEFTn79AMZ8P"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TX0yPEFTn79AMZ8P",
   },
   ooze: {
     label: "DND5E.CreatureOoze",
     plural: "DND5E.CreatureOozePl",
     icon: "/icons/creatures/slimes/slime-movement-pseudopods-green.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.cgzIC1ecG03D97Fg"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.cgzIC1ecG03D97Fg",
   },
   plant: {
     label: "DND5E.CreaturePlant",
     plural: "DND5E.CreaturePlantPl",
     icon: "/icons/magic/nature/tree-animated-strike.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1oT7t6tHE4kZuSN1"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1oT7t6tHE4kZuSN1",
   },
   undead: {
     label: "DND5E.CreatureUndead",
     plural: "DND5E.CreatureUndeadPl",
     icon: "/icons/magic/death/skull-horned-worn-fire-blue.webp",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.D2BdqS1GeD5rcZ6q",
-    detectAlignment: true
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.D2BdqS1GeD5rcZ6q",
+    detectAlignment: true,
+  },
 };
 preLocalize("creatureTypes", { keys: ["label", "plural"], sort: true });
-patchConfig("creatureTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
+patchConfig("creatureTypes", "label", {
+  since: "DnD5e 3.0",
+  until: "DnD5e 3.2",
+});
 
 /* -------------------------------------------- */
 
@@ -826,7 +867,7 @@ DND5E.itemActionTypes = {
   heal: "DND5E.ActionHeal",
   abil: "DND5E.ActionAbil",
   util: "DND5E.ActionUtil",
-  other: "DND5E.ActionOther"
+  other: "DND5E.ActionOther",
 };
 preLocalize("itemActionTypes");
 
@@ -838,7 +879,7 @@ preLocalize("itemActionTypes");
  */
 DND5E.itemCapacityTypes = {
   items: "DND5E.ItemContainerCapacityItems",
-  weight: "DND5E.ItemContainerCapacityWeight"
+  weight: "DND5E.ItemContainerCapacityWeight",
 };
 preLocalize("itemCapacityTypes", { sort: true });
 
@@ -854,7 +895,7 @@ DND5E.itemRarity = {
   rare: "DND5E.ItemRarityRare",
   veryRare: "DND5E.ItemRarityVeryRare",
   legendary: "DND5E.ItemRarityLegendary",
-  artifact: "DND5E.ItemRarityArtifact"
+  artifact: "DND5E.ItemRarityArtifact",
 };
 preLocalize("itemRarity");
 
@@ -867,7 +908,7 @@ preLocalize("itemRarity");
 DND5E.limitedUseFormulaPeriods = {
   charges: "DND5E.Charges",
   dawn: "DND5E.Dawn",
-  dusk: "DND5E.Dusk"
+  dusk: "DND5E.Dusk",
 };
 
 /* -------------------------------------------- */
@@ -880,7 +921,7 @@ DND5E.limitedUsePeriods = {
   sr: "DND5E.ShortRest",
   lr: "DND5E.LongRest",
   day: "DND5E.Day",
-  ...DND5E.limitedUseFormulaPeriods
+  ...DND5E.limitedUseFormulaPeriods,
 };
 preLocalize("limitedUsePeriods");
 
@@ -895,7 +936,7 @@ DND5E.armorTypes = {
   medium: "DND5E.EquipmentMedium",
   heavy: "DND5E.EquipmentHeavy",
   natural: "DND5E.EquipmentNatural",
-  shield: "DND5E.EquipmentShield"
+  shield: "DND5E.EquipmentShield",
 };
 preLocalize("armorTypes");
 
@@ -908,7 +949,7 @@ preLocalize("armorTypes");
 DND5E.miscEquipmentTypes = {
   clothing: "DND5E.EquipmentClothing",
   trinket: "DND5E.EquipmentTrinket",
-  vehicle: "DND5E.EquipmentVehicle"
+  vehicle: "DND5E.EquipmentVehicle",
 };
 preLocalize("miscEquipmentTypes", { sort: true });
 
@@ -920,7 +961,7 @@ preLocalize("miscEquipmentTypes", { sort: true });
  */
 DND5E.equipmentTypes = {
   ...DND5E.miscEquipmentTypes,
-  ...DND5E.armorTypes
+  ...DND5E.armorTypes,
 };
 preLocalize("equipmentTypes", { sort: true });
 
@@ -934,7 +975,7 @@ DND5E.vehicleTypes = {
   air: "DND5E.VehicleTypeAir",
   land: "DND5E.VehicleTypeLand",
   space: "DND5E.VehicleTypeSpace",
-  water: "DND5E.VehicleTypeWater"
+  water: "DND5E.VehicleTypeWater",
 };
 preLocalize("vehicleTypes", { sort: true });
 
@@ -948,7 +989,7 @@ DND5E.armorProficiencies = {
   lgt: "DND5E.ArmorLightProficiency",
   med: "DND5E.ArmorMediumProficiency",
   hvy: "DND5E.ArmorHeavyProficiency",
-  shl: "DND5E.EquipmentShieldProficiency"
+  shl: "DND5E.EquipmentShieldProficiency",
 };
 preLocalize("armorProficiencies");
 
@@ -963,7 +1004,7 @@ DND5E.armorProficienciesMap = {
   light: "lgt",
   medium: "med",
   heavy: "hvy",
-  shield: "shl"
+  shield: "shl",
 };
 
 /**
@@ -983,7 +1024,7 @@ DND5E.armorIds = {
   ringmail: "nsXZejlmgalj4he9",
   scalemail: "XmnlF5fgIO3tg6TG",
   splint: "cKpJmsJmU8YaiuqG",
-  studded: "TIV3B1vbrVHIhQAm"
+  studded: "TIV3B1vbrVHIhQAm",
 };
 
 /**
@@ -991,7 +1032,7 @@ DND5E.armorIds = {
  * @enum {string}
  */
 DND5E.shieldIds = {
-  shield: "sSs3hSzkKBMNBgTs"
+  shield: "sSs3hSzkKBMNBgTs",
 };
 
 /**
@@ -1001,35 +1042,35 @@ DND5E.shieldIds = {
 DND5E.armorClasses = {
   flat: {
     label: "DND5E.ArmorClassFlat",
-    formula: "@attributes.ac.flat"
+    formula: "@attributes.ac.flat",
   },
   natural: {
     label: "DND5E.ArmorClassNatural",
-    formula: "@attributes.ac.flat"
+    formula: "@attributes.ac.flat",
   },
   default: {
     label: "DND5E.ArmorClassEquipment",
-    formula: "@attributes.ac.armor + @attributes.ac.dex"
+    formula: "@attributes.ac.armor + @attributes.ac.dex",
   },
   mage: {
     label: "DND5E.ArmorClassMage",
-    formula: "13 + @abilities.dex.mod"
+    formula: "13 + @abilities.dex.mod",
   },
   draconic: {
     label: "DND5E.ArmorClassDraconic",
-    formula: "13 + @abilities.dex.mod"
+    formula: "13 + @abilities.dex.mod",
   },
   unarmoredMonk: {
     label: "DND5E.ArmorClassUnarmoredMonk",
-    formula: "10 + @abilities.dex.mod + @abilities.wis.mod"
+    formula: "10 + @abilities.dex.mod + @abilities.wis.mod",
   },
   unarmoredBarb: {
     label: "DND5E.ArmorClassUnarmoredBarbarian",
-    formula: "10 + @abilities.dex.mod + @abilities.con.mod"
+    formula: "10 + @abilities.dex.mod + @abilities.con.mod",
   },
   custom: {
-    label: "DND5E.ArmorClassCustom"
-  }
+    label: "DND5E.ArmorClassCustom",
+  },
 };
 preLocalize("armorClasses", { key: "label" });
 
@@ -1054,11 +1095,11 @@ DND5E.consumableTypes = {
       arrow: "DND5E.ConsumableAmmoArrow",
       blowgunNeedle: "DND5E.ConsumableAmmoBlowgunNeedle",
       crossbowBolt: "DND5E.ConsumableAmmoCrossbowBolt",
-      slingBullet: "DND5E.ConsumableAmmoSlingBullet"
-    }
+      slingBullet: "DND5E.ConsumableAmmoSlingBullet",
+    },
   },
   potion: {
-    label: "DND5E.ConsumablePotion"
+    label: "DND5E.ConsumablePotion",
   },
   poison: {
     label: "DND5E.ConsumablePoison",
@@ -1066,26 +1107,29 @@ DND5E.consumableTypes = {
       contact: "DND5E.ConsumablePoisonContact",
       ingested: "DND5E.ConsumablePoisonIngested",
       inhaled: "DND5E.ConsumablePoisonInhaled",
-      injury: "DND5E.ConsumablePoisonInjury"
-    }
+      injury: "DND5E.ConsumablePoisonInjury",
+    },
   },
   food: {
-    label: "DND5E.ConsumableFood"
+    label: "DND5E.ConsumableFood",
   },
   scroll: {
-    label: "DND5E.ConsumableScroll"
+    label: "DND5E.ConsumableScroll",
   },
   wand: {
-    label: "DND5E.ConsumableWand"
+    label: "DND5E.ConsumableWand",
   },
   rod: {
-    label: "DND5E.ConsumableRod"
+    label: "DND5E.ConsumableRod",
   },
   trinket: {
-    label: "DND5E.ConsumableTrinket"
-  }
+    label: "DND5E.ConsumableTrinket",
+  },
 };
-patchConfig("consumableTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
+patchConfig("consumableTypes", "label", {
+  since: "DnD5e 3.0",
+  until: "DnD5e 3.2",
+});
 preLocalize("consumableTypes", { key: "label", sort: true });
 preLocalize("consumableTypes.ammo.subtypes", { sort: true });
 preLocalize("consumableTypes.poison.subtypes", { sort: true });
@@ -1114,7 +1158,7 @@ DND5E.containerTypes = {
   sack: "CNdDj8dsXVpRVpXt",
   saddlebags: "TmfaFUSZJAotndn9",
   tankard: "uw6fINSmZ2j2o57A",
-  vial: "meJEfX3gZgtMX4x2"
+  vial: "meJEfX3gZgtMX4x2",
 };
 
 /* -------------------------------------------- */
@@ -1139,8 +1183,8 @@ DND5E.focusTypes = {
       orb: "tH5Rn0JVRG1zdmPa",
       rod: "OojyyGfh91iViuMF",
       staff: "BeKIrNIvNHRPQ4t5",
-      wand: "KA2P6I48iOWlnboO"
-    }
+      wand: "KA2P6I48iOWlnboO",
+    },
   },
   druidic: {
     label: "DND5E.Focus.Druidic",
@@ -1148,17 +1192,17 @@ DND5E.focusTypes = {
       mistletoe: "xDK9GQd2iqOGH8Sd",
       totem: "PGL6aaM0wE5h0VN5",
       woodenstaff: "FF1ktpb2YSiyv896",
-      yewwand: "t5yP0d7YaKwuKKiH"
-    }
+      yewwand: "t5yP0d7YaKwuKKiH",
+    },
   },
   holy: {
     label: "DND5E.Focus.Holy",
     itemIds: {
       amulet: "paqlMjggWkBIAeCe",
       emblem: "laVqttkGMW4B9654",
-      reliquary: "gP1URGq3kVIIFHJ7"
-    }
-  }
+      reliquary: "gP1URGq3kVIIFHJ7",
+    },
+  },
 };
 
 /* -------------------------------------------- */
@@ -1169,7 +1213,7 @@ DND5E.focusTypes = {
  */
 DND5E.featureTypes = {
   background: {
-    label: "DND5E.Feature.Background"
+    label: "DND5E.Feature.Background",
   },
   class: {
     label: "DND5E.Feature.Class.Label",
@@ -1189,26 +1233,26 @@ DND5E.featureTypes = {
       pact: "DND5E.Feature.Class.PactBoon",
       psionicPower: "DND5E.Feature.Class.PsionicPower",
       rune: "DND5E.Feature.Class.Rune",
-      superiorHuntersDefense: "DND5E.Feature.Class.SuperiorHuntersDefense"
-    }
+      superiorHuntersDefense: "DND5E.Feature.Class.SuperiorHuntersDefense",
+    },
   },
   monster: {
-    label: "DND5E.Feature.Monster"
+    label: "DND5E.Feature.Monster",
   },
   race: {
-    label: "DND5E.Feature.Race"
+    label: "DND5E.Feature.Race",
   },
   feat: {
-    label: "DND5E.Feature.Feat"
+    label: "DND5E.Feature.Feat",
   },
   supernaturalGift: {
     label: "DND5E.Feature.SupernaturalGift.Label",
     subtypes: {
       blessing: "DND5E.Feature.SupernaturalGift.Blessing",
       charm: "DND5E.Feature.SupernaturalGift.Charm",
-      epicBoon: "DND5E.Feature.SupernaturalGift.EpicBoon"
-    }
-  }
+      epicBoon: "DND5E.Feature.SupernaturalGift.EpicBoon",
+    },
+  },
 };
 preLocalize("featureTypes", { key: "label" });
 preLocalize("featureTypes.class.subtypes", { sort: true });
@@ -1235,94 +1279,99 @@ preLocalize("featureTypes.supernaturalGift.subtypes", { sort: true });
 DND5E.itemProperties = {
   ada: {
     label: "DND5E.Item.Property.Adamantine",
-    isPhysical: true
+    isPhysical: true,
   },
   amm: {
-    label: "DND5E.Item.Property.Ammunition"
+    label: "DND5E.Item.Property.Ammunition",
   },
   concentration: {
     label: "DND5E.Item.Property.Concentration",
     abbreviation: "DND5E.ConcentrationAbbr",
     icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH",
-    isTag: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH",
+    isTag: true,
   },
   fin: {
-    label: "DND5E.Item.Property.Finesse"
+    label: "DND5E.Item.Property.Finesse",
   },
   fir: {
-    label: "DND5E.Item.Property.Firearm"
+    label: "DND5E.Item.Property.Firearm",
   },
   foc: {
-    label: "DND5E.Item.Property.Focus"
+    label: "DND5E.Item.Property.Focus",
   },
   hvy: {
-    label: "DND5E.Item.Property.Heavy"
+    label: "DND5E.Item.Property.Heavy",
   },
   lgt: {
-    label: "DND5E.Item.Property.Light"
+    label: "DND5E.Item.Property.Light",
   },
   lod: {
-    label: "DND5E.Item.Property.Loading"
+    label: "DND5E.Item.Property.Loading",
   },
   material: {
     label: "DND5E.Item.Property.Material",
     abbreviation: "DND5E.ComponentMaterialAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AeH5eDS4YeM9RETC"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AeH5eDS4YeM9RETC",
   },
   mgc: {
     label: "DND5E.Item.Property.Magical",
     icon: "systems/dnd5e/icons/svg/properties/magical.svg",
-    isPhysical: true
+    isPhysical: true,
   },
   rch: {
-    label: "DND5E.Item.Property.Reach"
+    label: "DND5E.Item.Property.Reach",
   },
   rel: {
-    label: "DND5E.Item.Property.Reload"
+    label: "DND5E.Item.Property.Reload",
   },
   ret: {
-    label: "DND5E.Item.Property.Returning"
+    label: "DND5E.Item.Property.Returning",
   },
   ritual: {
     label: "DND5E.Item.Property.Ritual",
     abbreviation: "DND5E.RitualAbbr",
     icon: "systems/dnd5e/icons/svg/items/spell.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA",
-    isTag: true
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA",
+    isTag: true,
   },
   sil: {
     label: "DND5E.Item.Property.Silvered",
-    isPhysical: true
+    isPhysical: true,
   },
   somatic: {
     label: "DND5E.Item.Property.Somatic",
     abbreviation: "DND5E.ComponentSomaticAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qwUNgUNilEmZkSC9"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qwUNgUNilEmZkSC9",
   },
   spc: {
-    label: "DND5E.Item.Property.Special"
+    label: "DND5E.Item.Property.Special",
   },
   stealthDisadvantage: {
-    label: "DND5E.Item.Property.StealthDisadvantage"
+    label: "DND5E.Item.Property.StealthDisadvantage",
   },
   thr: {
-    label: "DND5E.Item.Property.Thrown"
+    label: "DND5E.Item.Property.Thrown",
   },
   two: {
-    label: "DND5E.Item.Property.TwoHanded"
+    label: "DND5E.Item.Property.TwoHanded",
   },
   ver: {
-    label: "DND5E.Item.Property.Versatile"
+    label: "DND5E.Item.Property.Versatile",
   },
   vocal: {
     label: "DND5E.Item.Property.Verbal",
     abbreviation: "DND5E.ComponentVerbalAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx",
   },
   weightlessContents: {
-    label: "DND5E.Item.Property.WeightlessContents"
-  }
+    label: "DND5E.Item.Property.WeightlessContents",
+  },
 };
 preLocalize("itemProperties", { keys: ["label", "abbreviation"], sort: true });
 
@@ -1333,24 +1382,11 @@ preLocalize("itemProperties", { keys: ["label", "abbreviation"], sort: true });
  * @enum {object}
  */
 DND5E.validProperties = {
-  consumable: new Set([
-    "mgc"
-  ]),
-  container: new Set([
-    "mgc",
-    "weightlessContents"
-  ]),
-  equipment: new Set([
-    "concentration",
-    "mgc"
-  ]),
-  feat: new Set([
-    "concentration",
-    "mgc"
-  ]),
-  loot: new Set([
-    "mgc"
-  ]),
+  consumable: new Set(["mgc"]),
+  container: new Set(["mgc", "weightlessContents"]),
+  equipment: new Set(["concentration", "mgc"]),
+  feat: new Set(["concentration", "mgc"]),
+  loot: new Set(["mgc"]),
   weapon: new Set([
     "ada",
     "amm",
@@ -1368,19 +1404,10 @@ DND5E.validProperties = {
     "spc",
     "thr",
     "two",
-    "ver"
+    "ver",
   ]),
-  spell: new Set([
-    "vocal",
-    "somatic",
-    "material",
-    "concentration",
-    "ritual"
-  ]),
-  tool: new Set([
-    "concentration",
-    "mgc"
-  ])
+  spell: new Set(["vocal", "somatic", "material", "concentration", "ritual"]),
+  tool: new Set(["concentration", "mgc"]),
 };
 
 /* -------------------------------------------- */
@@ -1398,26 +1425,26 @@ DND5E.validProperties = {
  */
 DND5E.lootTypes = {
   art: {
-    label: "DND5E.Loot.Art"
+    label: "DND5E.Loot.Art",
   },
   gear: {
-    label: "DND5E.Loot.Gear"
+    label: "DND5E.Loot.Gear",
   },
   gem: {
-    label: "DND5E.Loot.Gem"
+    label: "DND5E.Loot.Gem",
   },
   junk: {
-    label: "DND5E.Loot.Junk"
+    label: "DND5E.Loot.Junk",
   },
   material: {
-    label: "DND5E.Loot.Material"
+    label: "DND5E.Loot.Material",
   },
   resource: {
-    label: "DND5E.Loot.Resource"
+    label: "DND5E.Loot.Resource",
   },
   treasure: {
-    label: "DND5E.Loot.Treasure"
-  }
+    label: "DND5E.Loot.Treasure",
+  },
 };
 preLocalize("lootTypes", { key: "label" });
 
@@ -1439,28 +1466,28 @@ DND5E.currencies = {
   pp: {
     label: "DND5E.CurrencyPP",
     abbreviation: "DND5E.CurrencyAbbrPP",
-    conversion: 0.1
+    conversion: 0.1,
   },
   gp: {
     label: "DND5E.CurrencyGP",
     abbreviation: "DND5E.CurrencyAbbrGP",
-    conversion: 1
+    conversion: 1,
   },
   ep: {
     label: "DND5E.CurrencyEP",
     abbreviation: "DND5E.CurrencyAbbrEP",
-    conversion: 2
+    conversion: 2,
   },
   sp: {
     label: "DND5E.CurrencySP",
     abbreviation: "DND5E.CurrencyAbbrSP",
-    conversion: 10
+    conversion: 10,
   },
   cp: {
     label: "DND5E.CurrencyCP",
     abbreviation: "DND5E.CurrencyAbbrCP",
-    conversion: 100
-  }
+    conversion: 100,
+  },
 };
 preLocalize("currencies", { keys: ["label", "abbreviation"] });
 
@@ -1476,7 +1503,7 @@ preLocalize("currencies", { keys: ["label", "abbreviation"] });
 DND5E.physicalDamageTypes = {
   bludgeoning: "DND5E.DamageBludgeoning",
   piercing: "DND5E.DamagePiercing",
-  slashing: "DND5E.DamageSlashing"
+  slashing: "DND5E.DamageSlashing",
 };
 preLocalize("physicalDamageTypes", { sort: true });
 
@@ -1500,71 +1527,84 @@ DND5E.damageTypes = {
   acid: {
     label: "DND5E.DamageAcid",
     icon: "systems/dnd5e/icons/svg/damage/acid.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.IQhbKRPe1vCPdh8v"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.IQhbKRPe1vCPdh8v",
   },
   bludgeoning: {
     label: "DND5E.DamageBludgeoning",
     icon: "systems/dnd5e/icons/svg/damage/bludgeoning.svg",
     isPhysical: true,
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.39LFrlef94JIYO8m"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.39LFrlef94JIYO8m",
   },
   cold: {
     label: "DND5E.DamageCold",
     icon: "systems/dnd5e/icons/svg/damage/cold.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4xsFUooHDEdfhw6g"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4xsFUooHDEdfhw6g",
   },
   fire: {
     label: "DND5E.DamageFire",
     icon: "systems/dnd5e/icons/svg/damage/fire.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.f1S66aQJi4PmOng6"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.f1S66aQJi4PmOng6",
   },
   force: {
     label: "DND5E.DamageForce",
     icon: "systems/dnd5e/icons/svg/damage/force.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.eFTWzngD8dKWQuUR"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.eFTWzngD8dKWQuUR",
   },
   lightning: {
     label: "DND5E.DamageLightning",
     icon: "systems/dnd5e/icons/svg/damage/lightning.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9SaxFJ9bM3SutaMC"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9SaxFJ9bM3SutaMC",
   },
   necrotic: {
     label: "DND5E.DamageNecrotic",
     icon: "systems/dnd5e/icons/svg/damage/acid.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.klOVUV5G1U7iaKoG"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.klOVUV5G1U7iaKoG",
   },
   piercing: {
     label: "DND5E.DamagePiercing",
     icon: "systems/dnd5e/icons/svg/damage/piercing.svg",
     isPhysical: true,
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.95agSnEGTdAmKhyC"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.95agSnEGTdAmKhyC",
   },
   poison: {
     label: "DND5E.DamagePoison",
     icon: "systems/dnd5e/icons/svg/statuses/poisoned.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.k5wOYXdWPzcWwds1"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.k5wOYXdWPzcWwds1",
   },
   psychic: {
     label: "DND5E.DamagePsychic",
     icon: "systems/dnd5e/icons/svg/damage/psychic.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.YIKbDv4zYqbE5teJ"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.YIKbDv4zYqbE5teJ",
   },
   radiant: {
     label: "DND5E.DamageRadiant",
     icon: "systems/dnd5e/icons/svg/damage/radiant.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5tcK9buXWDOw8yHH"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5tcK9buXWDOw8yHH",
   },
   slashing: {
     label: "DND5E.DamageSlashing",
     icon: "systems/dnd5e/icons/svg/damage/slashing.svg",
     isPhysical: true,
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.sz2XKQ5lgsdPEJOa"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.sz2XKQ5lgsdPEJOa",
   },
   thunder: {
     label: "DND5E.DamageThunder",
     icon: "systems/dnd5e/icons/svg/damage/thunder.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iqsmMHk7FSpiNkQy"
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iqsmMHk7FSpiNkQy",
+  },
 };
 patchConfig("damageTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
 preLocalize("damageTypes", { keys: ["label"], sort: true });
@@ -1580,14 +1620,17 @@ preLocalize("damageTypes", { keys: ["label"], sort: true });
 DND5E.healingTypes = {
   healing: {
     label: "DND5E.Healing",
-    icon: "systems/dnd5e/icons/svg/damage/healing.svg"
+    icon: "systems/dnd5e/icons/svg/damage/healing.svg",
   },
   temphp: {
     label: "DND5E.HealingTemp",
-    icon: "systems/dnd5e/icons/svg/damage/temphp.svg"
-  }
+    icon: "systems/dnd5e/icons/svg/damage/temphp.svg",
+  },
 };
-patchConfig("healingTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
+patchConfig("healingTypes", "label", {
+  since: "DnD5e 3.0",
+  until: "DnD5e 3.2",
+});
 preLocalize("healingTypes", { keys: ["label"] });
 
 /* -------------------------------------------- */
@@ -1602,7 +1645,7 @@ DND5E.movementTypes = {
   climb: "DND5E.MovementClimb",
   fly: "DND5E.MovementFly",
   swim: "DND5E.MovementSwim",
-  walk: "DND5E.MovementWalk"
+  walk: "DND5E.MovementWalk",
 };
 preLocalize("movementTypes", { sort: true });
 
@@ -1619,7 +1662,7 @@ DND5E.movementUnits = {
   ft: "DND5E.DistFt",
   mi: "DND5E.DistMi",
   m: "DND5E.DistM",
-  km: "DND5E.DistKm"
+  km: "DND5E.DistKm",
 };
 preLocalize("movementUnits");
 
@@ -1633,7 +1676,7 @@ DND5E.rangeTypes = {
   self: "DND5E.DistSelf",
   touch: "DND5E.DistTouch",
   spec: "DND5E.Special",
-  any: "DND5E.DistAny"
+  any: "DND5E.DistAny",
 };
 preLocalize("rangeTypes");
 
@@ -1646,7 +1689,7 @@ preLocalize("rangeTypes");
  */
 DND5E.distanceUnits = {
   ...DND5E.movementUnits,
-  ...DND5E.rangeTypes
+  ...DND5E.rangeTypes,
 };
 preLocalize("distanceUnits");
 
@@ -1673,44 +1716,44 @@ preLocalize("distanceUnits");
 DND5E.encumbrance = {
   currencyPerWeight: {
     imperial: 50,
-    metric: 110
+    metric: 110,
   },
   effects: {
     encumbered: {
       name: "EFFECT.DND5E.StatusEncumbered",
-      icon: "systems/dnd5e/icons/svg/statuses/encumbered.svg"
+      icon: "systems/dnd5e/icons/svg/statuses/encumbered.svg",
     },
     heavilyEncumbered: {
       name: "EFFECT.DND5E.StatusHeavilyEncumbered",
-      icon: "systems/dnd5e/icons/svg/statuses/heavily-encumbered.svg"
+      icon: "systems/dnd5e/icons/svg/statuses/heavily-encumbered.svg",
     },
     exceedingCarryingCapacity: {
       name: "EFFECT.DND5E.StatusExceedingCarryingCapacity",
-      icon: "systems/dnd5e/icons/svg/statuses/exceeding-carrying-capacity.svg"
-    }
+      icon: "systems/dnd5e/icons/svg/statuses/exceeding-carrying-capacity.svg",
+    },
   },
   threshold: {
     encumbered: {
       imperial: 5,
-      metric: 2.2
+      metric: 2.2,
     },
     heavilyEncumbered: {
       imperial: 10,
-      metric: 4.5
+      metric: 4.5,
     },
     maximum: {
       imperial: 15,
-      metric: 6.8
-    }
+      metric: 6.8,
+    },
   },
   speedReduction: {
     encumbered: 10,
-    heavilyEncumbered: 20
+    heavilyEncumbered: 20,
   },
   vehicleWeightMultiplier: {
     imperial: 2000, // 2000 lbs in an imperial ton
-    metric: 1000 // 1000 kg in a metric ton
-  }
+    metric: 1000, // 1000 kg in a metric ton
+  },
 };
 Object.defineProperty(DND5E.encumbrance, "strMultiplier", {
   get() {
@@ -1719,7 +1762,7 @@ Object.defineProperty(DND5E.encumbrance, "strMultiplier", {
       { since: "DnD5e 3.0", until: "DnD5e 3.2" }
     );
     return this.threshold.maximum;
-  }
+  },
 });
 preLocalize("encumbrance.effects", { key: "name" });
 
@@ -1740,7 +1783,7 @@ DND5E.individualTargetTypes = {
   space: "DND5E.TargetSpace",
   creatureOrObject: "DND5E.TargetCreatureOrObject",
   any: "DND5E.TargetAny",
-  willing: "DND5E.TargetWilling"
+  willing: "DND5E.TargetWilling",
 };
 preLocalize("individualTargetTypes");
 
@@ -1762,41 +1805,46 @@ preLocalize("individualTargetTypes");
 DND5E.areaTargetTypes = {
   radius: {
     label: "DND5E.TargetRadius",
-    template: "circle"
+    template: "circle",
   },
   sphere: {
     label: "DND5E.TargetSphere",
     template: "circle",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.npdEWb2egUPnB5Fa"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.npdEWb2egUPnB5Fa",
   },
   cylinder: {
     label: "DND5E.TargetCylinder",
     template: "circle",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jZFp4R7tXsIqkiG3"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jZFp4R7tXsIqkiG3",
   },
   cone: {
     label: "DND5E.TargetCone",
     template: "cone",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DqqAOr5JnX71OCOw"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DqqAOr5JnX71OCOw",
   },
   square: {
     label: "DND5E.TargetSquare",
-    template: "rect"
+    template: "rect",
   },
   cube: {
     label: "DND5E.TargetCube",
     template: "rect",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.dRfDIwuaHmUQ06uA"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.dRfDIwuaHmUQ06uA",
   },
   line: {
     label: "DND5E.TargetLine",
     template: "ray",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6DOoBgg7okm9gBc6"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6DOoBgg7okm9gBc6",
   },
   wall: {
     label: "DND5E.TargetWall",
-    template: "ray"
-  }
+    template: "ray",
+  },
 };
 preLocalize("areaTargetTypes", { key: "label", sort: true });
 
@@ -1808,7 +1856,9 @@ preLocalize("areaTargetTypes", { key: "label", sort: true });
  */
 DND5E.targetTypes = {
   ...DND5E.individualTargetTypes,
-  ...Object.fromEntries(Object.entries(DND5E.areaTargetTypes).map(([k, v]) => [k, v.label]))
+  ...Object.fromEntries(
+    Object.entries(DND5E.areaTargetTypes).map(([k, v]) => [k, v.label])
+  ),
 };
 preLocalize("targetTypes", { sort: true });
 
@@ -1830,7 +1880,7 @@ DND5E.senses = {
   blindsight: "DND5E.SenseBlindsight",
   darkvision: "DND5E.SenseDarkvision",
   tremorsense: "DND5E.SenseTremorsense",
-  truesight: "DND5E.SenseTruesight"
+  truesight: "DND5E.SenseTruesight",
 };
 preLocalize("senses", { sort: true });
 
@@ -1863,7 +1913,7 @@ DND5E.SPELL_SLOT_TABLE = [
   [4, 3, 3, 3, 2, 1, 1, 1, 1],
   [4, 3, 3, 3, 3, 1, 1, 1, 1],
   [4, 3, 3, 3, 3, 2, 1, 1, 1],
-  [4, 3, 3, 3, 3, 2, 2, 1, 1]
+  [4, 3, 3, 3, 3, 2, 2, 1, 1],
 ];
 
 /* -------------------------------------------- */
@@ -1888,7 +1938,7 @@ DND5E.pactCastingProgression = {
   7: { slots: 2, level: 4 },
   9: { slots: 2, level: 5 },
   11: { slots: 3, level: 5 },
-  17: { slots: 4, level: 5 }
+  17: { slots: 4, level: 5 },
 };
 
 /* -------------------------------------------- */
@@ -1910,29 +1960,32 @@ DND5E.pactCastingProgression = {
 DND5E.spellPreparationModes = {
   prepared: {
     label: "DND5E.SpellPrepPrepared",
-    upcast: true
+    upcast: true,
   },
   pact: {
     label: "DND5E.PactMagic",
     upcast: true,
     cantrips: true,
-    order: 0.5
+    order: 0.5,
   },
   always: {
     label: "DND5E.SpellPrepAlways",
-    upcast: true
+    upcast: true,
   },
   atwill: {
     label: "DND5E.SpellPrepAtWill",
-    order: -20
+    order: -20,
   },
   innate: {
     label: "DND5E.SpellPrepInnate",
-    order: -10
-  }
+    order: -10,
+  },
 };
 preLocalize("spellPreparationModes", { key: "label" });
-patchConfig("spellPreparationModes", "label", { since: "DnD5e 3.1", until: "DnD5e 3.3" });
+patchConfig("spellPreparationModes", "label", {
+  since: "DnD5e 3.1",
+  until: "DnD5e 3.3",
+});
 
 /* -------------------------------------------- */
 
@@ -1972,26 +2025,26 @@ DND5E.spellcastingTypes = {
     progression: {
       full: {
         label: "DND5E.SpellProgFull",
-        divisor: 1
+        divisor: 1,
       },
       half: {
         label: "DND5E.SpellProgHalf",
-        divisor: 2
+        divisor: 2,
       },
       third: {
         label: "DND5E.SpellProgThird",
-        divisor: 3
+        divisor: 3,
       },
       artificer: {
         label: "DND5E.SpellProgArt",
         divisor: 2,
-        roundUp: true
-      }
-    }
+        roundUp: true,
+      },
+    },
   },
   pact: {
-    label: "DND5E.SpellProgPact"
-  }
+    label: "DND5E.SpellProgPact",
+  },
 };
 preLocalize("spellcastingTypes", { key: "label", sort: true });
 preLocalize("spellcastingTypes.leveled.progression", { key: "label" });
@@ -2008,7 +2061,7 @@ DND5E.spellProgression = {
   half: "DND5E.SpellProgHalf",
   third: "DND5E.SpellProgThird",
   pact: "DND5E.SpellProgPact",
-  artificer: "DND5E.SpellProgArt"
+  artificer: "DND5E.SpellProgArt",
 };
 preLocalize("spellProgression", { key: "label" });
 
@@ -2028,7 +2081,7 @@ DND5E.spellLevels = {
   6: "DND5E.SpellLevel6",
   7: "DND5E.SpellLevel7",
   8: "DND5E.SpellLevel8",
-  9: "DND5E.SpellLevel9"
+  9: "DND5E.SpellLevel9",
 };
 preLocalize("spellLevels");
 
@@ -2041,7 +2094,7 @@ preLocalize("spellLevels");
 DND5E.spellScalingModes = {
   none: "DND5E.SpellNone",
   cantrip: "DND5E.SpellCantrip",
-  level: "DND5E.SpellLevel"
+  level: "DND5E.SpellLevel",
 };
 preLocalize("spellScalingModes", { sort: true });
 
@@ -2064,18 +2117,21 @@ DND5E.spellComponents = {
   vocal: {
     label: "DND5E.ComponentVerbal",
     abbr: "DND5E.ComponentVerbalAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx",
   },
   somatic: {
     label: "DND5E.ComponentSomatic",
     abbr: "DND5E.ComponentSomaticAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qwUNgUNilEmZkSC9"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qwUNgUNilEmZkSC9",
   },
   material: {
     label: "DND5E.ComponentMaterial",
     abbr: "DND5E.ComponentMaterialAbbr",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AeH5eDS4YeM9RETC"
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AeH5eDS4YeM9RETC",
+  },
 };
 preLocalize("spellComponents", { keys: ["label", "abbr"] });
 
@@ -2100,14 +2156,16 @@ DND5E.spellTags = {
     label: "DND5E.Concentration",
     abbr: "DND5E.ConcentrationAbbr",
     icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH",
   },
   ritual: {
     label: "DND5E.Ritual",
     abbr: "DND5E.RitualAbbr",
     icon: "systems/dnd5e/icons/svg/items/spell.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA"
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA",
+  },
 };
 preLocalize("spellTags", { keys: ["label", "abbr"] });
 
@@ -2132,53 +2190,64 @@ DND5E.spellSchools = {
     label: "DND5E.SchoolAbj",
     icon: "systems/dnd5e/icons/svg/schools/abjuration.svg",
     fullKey: "abjuration",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.849AYEWw9FHD6JNz"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.849AYEWw9FHD6JNz",
   },
   con: {
     label: "DND5E.SchoolCon",
     icon: "systems/dnd5e/icons/svg/schools/conjuration.svg",
     fullKey: "conjuration",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TWyKMhZJZGqQ6uls"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TWyKMhZJZGqQ6uls",
   },
   div: {
     label: "DND5E.SchoolDiv",
     icon: "systems/dnd5e/icons/svg/schools/divination.svg",
     fullKey: "divination",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HoD2MwzmVbMqj9se"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HoD2MwzmVbMqj9se",
   },
   enc: {
     label: "DND5E.SchoolEnc",
     icon: "systems/dnd5e/icons/svg/schools/enchantment.svg",
     fullKey: "enchantment",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.SehPXk24ySBVOwCZ"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.SehPXk24ySBVOwCZ",
   },
   evo: {
     label: "DND5E.SchoolEvo",
     icon: "systems/dnd5e/icons/svg/schools/evocation.svg",
     fullKey: "evocation",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kGp1RNuxL2SELLRC"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kGp1RNuxL2SELLRC",
   },
   ill: {
     label: "DND5E.SchoolIll",
     icon: "systems/dnd5e/icons/svg/schools/illusion.svg",
     fullKey: "illusion",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.smEk7kvVyslFozrB"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.smEk7kvVyslFozrB",
   },
   nec: {
     label: "DND5E.SchoolNec",
     icon: "systems/dnd5e/icons/svg/schools/necromancy.svg",
     fullKey: "necromancy",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.W0eyiV1FBmngb6Qh"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.W0eyiV1FBmngb6Qh",
   },
   trs: {
     label: "DND5E.SchoolTrs",
     icon: "systems/dnd5e/icons/svg/schools/transmutation.svg",
     fullKey: "transmutation",
-    reference: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.IYWewSailtmv6qEb"
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.IYWewSailtmv6qEb",
+  },
 };
 preLocalize("spellSchools", { key: "label", sort: true });
-patchConfig("spellSchools", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
+patchConfig("spellSchools", "label", {
+  since: "DnD5e 3.0",
+  until: "DnD5e 3.2",
+});
 
 /* -------------------------------------------- */
 
@@ -2196,7 +2265,7 @@ DND5E.spellScrollIds = {
   6: "tI3rWx4bxefNCexS",
   7: "mtyw4NS1s7j2EJaD",
   8: "aOrinPg7yuDZEuWr",
-  9: "O4YbkJkLlnsgUszZ"
+  9: "O4YbkJkLlnsgUszZ",
 };
 
 /* -------------------------------------------- */
@@ -2214,7 +2283,7 @@ DND5E.weaponTypes = {
   martialR: "DND5E.WeaponMartialR",
   natural: "DND5E.WeaponNatural",
   improv: "DND5E.WeaponImprov",
-  siege: "DND5E.WeaponSiege"
+  siege: "DND5E.WeaponSiege",
 };
 preLocalize("weaponTypes");
 
@@ -2229,7 +2298,7 @@ preLocalize("weaponTypes");
 DND5E.physicalWeaponProperties = {
   ada: "DND5E.WeaponPropertiesAda",
   mgc: "DND5E.WeaponPropertiesMgc",
-  sil: "DND5E.WeaponPropertiesSil"
+  sil: "DND5E.WeaponPropertiesSil",
 };
 preLocalize("physicalWeaponProperties", { sort: true });
 
@@ -2255,7 +2324,7 @@ DND5E.weaponProperties = {
   spc: "DND5E.WeaponPropertiesSpc",
   thr: "DND5E.WeaponPropertiesThr",
   two: "DND5E.WeaponPropertiesTwo",
-  ver: "DND5E.WeaponPropertiesVer"
+  ver: "DND5E.WeaponPropertiesVer",
 };
 preLocalize("weaponProperties", { sort: true });
 
@@ -2266,7 +2335,7 @@ preLocalize("weaponProperties", { sort: true });
  * @enum {string}
  */
 DND5E.sourcePacks = {
-  ITEMS: "dnd5e.items"
+  ITEMS: "dnd5e.items",
 };
 
 /* -------------------------------------------- */
@@ -2288,7 +2357,7 @@ DND5E.polymorphSettings = {
   keepItems: "DND5E.PolymorphKeepItems",
   keepBio: "DND5E.PolymorphKeepBio",
   keepVision: "DND5E.PolymorphKeepVision",
-  keepSelf: "DND5E.PolymorphKeepSelf"
+  keepSelf: "DND5E.PolymorphKeepSelf",
 };
 preLocalize("polymorphSettings", { sort: true });
 
@@ -2304,7 +2373,7 @@ DND5E.polymorphEffectSettings = {
   keepFeatAE: "DND5E.PolymorphKeepFeatureAE",
   keepSpellAE: "DND5E.PolymorphKeepSpellAE",
   keepClassAE: "DND5E.PolymorphKeepClassAE",
-  keepBackgroundAE: "DND5E.PolymorphKeepBackgroundAE"
+  keepBackgroundAE: "DND5E.PolymorphKeepBackgroundAE",
 };
 preLocalize("polymorphEffectSettings", { sort: true });
 
@@ -2322,8 +2391,8 @@ DND5E.transformationPresets = {
       keepMental: true,
       mergeSaves: true,
       mergeSkills: true,
-      keepEquipmentAE: false
-    }
+      keepEquipmentAE: false,
+    },
   },
   polymorph: {
     icon: '<i class="fas fa-pastafarianism"></i>',
@@ -2332,16 +2401,16 @@ DND5E.transformationPresets = {
       keepEquipmentAE: false,
       keepClassAE: false,
       keepFeatAE: false,
-      keepBackgroundAE: false
-    }
+      keepBackgroundAE: false,
+    },
   },
   polymorphSelf: {
     icon: '<i class="fas fa-eye"></i>',
     label: "DND5E.PolymorphSelf",
     options: {
-      keepSelf: true
-    }
-  }
+      keepSelf: true,
+    },
+  },
 };
 preLocalize("transformationPresets", { sort: true, keys: ["label"] });
 
@@ -2356,7 +2425,7 @@ DND5E.proficiencyLevels = {
   0: "DND5E.NotProficient",
   1: "DND5E.Proficient",
   0.5: "DND5E.HalfProficient",
-  2: "DND5E.Expertise"
+  2: "DND5E.Expertise",
 };
 preLocalize("proficiencyLevels");
 
@@ -2368,7 +2437,7 @@ preLocalize("proficiencyLevels");
  */
 DND5E.weaponAndArmorProficiencyLevels = {
   0: "DND5E.NotProficient",
-  1: "DND5E.Proficient"
+  1: "DND5E.Proficient",
 };
 preLocalize("weaponAndArmorProficiencyLevels");
 
@@ -2381,9 +2450,9 @@ preLocalize("weaponAndArmorProficiencyLevels");
  */
 DND5E.cover = {
   0: "DND5E.None",
-  .5: "DND5E.CoverHalf",
-  .75: "DND5E.CoverThreeQuarters",
-  1: "DND5E.CoverTotal"
+  0.5: "DND5E.CoverHalf",
+  0.75: "DND5E.CoverThreeQuarters",
+  1: "DND5E.CoverTotal",
 };
 preLocalize("cover");
 
@@ -2395,9 +2464,17 @@ preLocalize("cover");
  * @deprecated since v10
  */
 DND5E.trackableAttributes = [
-  "attributes.ac.value", "attributes.init.bonus", "attributes.movement", "attributes.senses", "attributes.spelldc",
-  "attributes.spellLevel", "details.cr", "details.spellLevel", "details.xp.value", "skills.*.passive",
-  "abilities.*.value"
+  "attributes.ac.value",
+  "attributes.init.bonus",
+  "attributes.movement",
+  "attributes.senses",
+  "attributes.spelldc",
+  "attributes.spellLevel",
+  "details.cr",
+  "details.spellLevel",
+  "details.xp.value",
+  "skills.*.passive",
+  "abilities.*.value",
 ];
 
 /* -------------------------------------------- */
@@ -2431,91 +2508,234 @@ DND5E.conditionTypes = {
   blinded: {
     label: "DND5E.ConBlinded",
     icon: "systems/dnd5e/icons/svg/statuses/blinded.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.0b8N4FymGGfbZGpJ",
-    special: "BLIND"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.0b8N4FymGGfbZGpJ",
+    special: "BLIND",
   },
   charmed: {
     label: "DND5E.ConCharmed",
     icon: "systems/dnd5e/icons/svg/statuses/charmed.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.zZaEBrKkr66OWJvD"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.zZaEBrKkr66OWJvD",
   },
   deafened: {
     label: "DND5E.ConDeafened",
     icon: "systems/dnd5e/icons/svg/statuses/deafened.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.6G8JSjhn701cBITY"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.6G8JSjhn701cBITY",
   },
   diseased: {
     label: "DND5E.ConDiseased",
-    icon: "icons/svg/biohazard.svg"
+    icon: "icons/svg/biohazard.svg",
   },
   exhaustion: {
     label: "DND5E.ConExhaustion",
     icon: "systems/dnd5e/icons/svg/statuses/exhaustion.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.cspWveykstnu3Zcv",
-    levels: 6
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.cspWveykstnu3Zcv",
+    levels: 10,
   },
   frightened: {
     label: "DND5E.ConFrightened",
     icon: "systems/dnd5e/icons/svg/statuses/frightened.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.oreoyaFKnvZCrgij"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.oreoyaFKnvZCrgij",
   },
   grappled: {
     label: "DND5E.ConGrappled",
     icon: "systems/dnd5e/icons/svg/statuses/grappled.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.gYDAhd02ryUmtwZn"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.gYDAhd02ryUmtwZn",
   },
   incapacitated: {
     label: "DND5E.ConIncapacitated",
     icon: "systems/dnd5e/icons/svg/statuses/incapacitated.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.TpkZgLfxCmSndmpb"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.TpkZgLfxCmSndmpb",
   },
   invisible: {
     label: "DND5E.ConInvisible",
     icon: "systems/dnd5e/icons/svg/statuses/invisible.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.3UU5GCTVeRDbZy9u"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.3UU5GCTVeRDbZy9u",
   },
   paralyzed: {
     label: "DND5E.ConParalyzed",
     icon: "systems/dnd5e/icons/svg/statuses/paralyzed.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.xnSV5hLJIMaTABXP",
-    statuses: ["incapacitated"]
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.xnSV5hLJIMaTABXP",
+    statuses: ["incapacitated"],
   },
   petrified: {
     label: "DND5E.ConPetrified",
     icon: "systems/dnd5e/icons/svg/statuses/petrified.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.xaNDaW6NwQTgHSmi",
-    statuses: ["incapacitated"]
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.xaNDaW6NwQTgHSmi",
+    statuses: ["incapacitated"],
   },
   poisoned: {
     label: "DND5E.ConPoisoned",
     icon: "systems/dnd5e/icons/svg/statuses/poisoned.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.lq3TRI6ZlED8ABMx"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.lq3TRI6ZlED8ABMx",
   },
   prone: {
     label: "DND5E.ConProne",
     icon: "systems/dnd5e/icons/svg/statuses/prone.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.y0TkcdyoZlOTmAFT"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.y0TkcdyoZlOTmAFT",
   },
   restrained: {
     label: "DND5E.ConRestrained",
     icon: "systems/dnd5e/icons/svg/statuses/restrained.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.cSVcyZyNe2iG1fIc"
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.cSVcyZyNe2iG1fIc",
   },
   stunned: {
     label: "DND5E.ConStunned",
     icon: "systems/dnd5e/icons/svg/statuses/stunned.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.ZyZMUwA2rboh4ObS",
-    statuses: ["incapacitated"]
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.ZyZMUwA2rboh4ObS",
+    statuses: ["incapacitated"],
   },
   unconscious: {
     label: "DND5E.ConUnconscious",
     icon: "systems/dnd5e/icons/svg/statuses/unconscious.svg",
-    reference: "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.UWw13ISmMxDzmwbd",
-    statuses: ["incapacitated", "prone"]
-  }
+    reference:
+      "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.UWw13ISmMxDzmwbd",
+    statuses: ["incapacitated", "prone"],
+  },
+  // Custom effects
+  CEAura: {
+    label: "DND5E.AuraEffect",
+    icon: "icons/svg/aura.svg",
+  },
+  CEAcid: {
+    label: "DND5E.AcidEffect",
+    icon: "icons/svg/acid.svg",
+  },
+  CEBlood: {
+    label: "DND5E.BloodEffect",
+    icon: "icons/svg/blood.svg",
+  },
+  CECancel: {
+    label: "DND5E.CancelEffect",
+    icon: "icons/svg/cancel.svg",
+  },
+  CECircle: {
+    label: "DND5E.CircleEffect",
+    icon: "icons/svg/circle.svg",
+  },
+  CEDaze: {
+    label: "DND5E.DazeEffect",
+    icon: "icons/svg/daze.svg",
+  },
+  CEDowgrade: {
+    label: "DND5E.DowngradeEffect",
+    icon: "icons/svg/downgrade.svg",
+  },
+  CEDegen: {
+    label: "DND5E.DegenEffect",
+    icon: "icons/svg/degen.svg",
+  },
+  CEEye: {
+    label: "DND5E.EyeEffect",
+    icon: "icons/svg/eye.svg",
+  },
+  CEFalling: {
+    label: "DND5E.FallingEffect",
+    icon: "icons/svg/falling.svg",
+  },
+  CEFire: {
+    label: "DND5E.FireEffect",
+    icon: "icons/svg/fire.svg",
+  },
+  CEFireShield: {
+    label: "DND5E.FireShieldEffect",
+    icon: "icons/svg/fire-shield.svg",
+  },
+  CEFrozen: {
+    label: "DND5E.FrozenEffect",
+    icon: "icons/svg/frozen.svg",
+  },
+  CEHeal: {
+    label: "DND5E.HealEffect",
+    icon: "icons/svg/heal.svg",
+  },
+  CEHolyShield: {
+    label: "DND5E.HolyShieldEffect",
+    icon: "icons/svg/holy-shield.svg",
+  },
+  CEIceAura: {
+    label: "DND5E.IceAuraEffect",
+    icon: "icons/svg/ice-aura.svg",
+  },
+  CELightning: {
+    label: "DND5E.LightningEffect",
+    icon: "icons/svg/lightning.svg",
+  },
+  CESun: {
+    label: "DND5E.SunEffect",
+    icon: "icons/svg/sun.svg",
+  },
+  CEExplosion: {
+    label: "DND5E.ExplosionEffect",
+    icon: "icons/svg/explosion.svg",
+  },
+  CERegen: {
+    label: "DND5E.RegenEffect",
+    icon: "icons/svg/regen.svg",
+  },
+  CETarget: {
+    label: "DND5E.TargetEffect",
+    icon: "icons/svg/target.svg",
+  },
+  CEUpgrade: {
+    label: "DND5E.UpgradeEffect",
+    icon: "icons/svg/upgrade.svg",
+  },
+  CEWing: {
+    label: "DND5E.WingEffect",
+    icon: "icons/svg/wing.svg",
+  },
+  CEAquaCircle: {
+    label: "DND5E.AquaCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/aqua-circle.svg",
+  },
+  CEBlueCircle: {
+    label: "DND5E.BlueCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/blue-circle.svg",
+  },
+  CEFuchsiaCircle: {
+    label: "DND5E.FuchsiaCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/fuchsia-circle.svg",
+  },
+  CEGrayCircle: {
+    label: "DND5E.GrayCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/gray-circle.svg",
+  },
+  CEGreenCircle: {
+    label: "DND5E.GreenCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/green-circle.svg",
+  },
+  CERedCircle: {
+    label: "DND5E.RedCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/red-circle.svg",
+  },
+  CEWhiteCircle: {
+    label: "DND5E.WhiteCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/white-circle.svg",
+  },
+  CEYellowCircle: {
+    label: "DND5E.YellowCircleEffect",
+    icon: "systems/dnd5e/icons/svg/icons/yellow-circle.svg",
+  },
 };
 preLocalize("conditionTypes", { key: "label", sort: true });
-patchConfig("conditionTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" });
+patchConfig("conditionTypes", "label", {
+  since: "DnD5e 3.0",
+  until: "DnD5e 3.2",
+});
 
 /* -------------------------------------------- */
 
@@ -2525,11 +2745,18 @@ patchConfig("conditionTypes", "label", { since: "DnD5e 3.0", until: "DnD5e 3.2" 
  * @enum {object}
  */
 DND5E.conditionEffects = {
-  noMovement: new Set(["exhaustion-5", "grappled", "paralyzed", "petrified", "restrained", "stunned", "unconscious"]),
-  halfMovement: new Set(["exhaustion-2", "prone"]),
+  noMovement: new Set([
+    "grappled",
+    "paralyzed",
+    "petrified",
+    "restrained",
+    "stunned",
+    "unconscious",
+  ]),
+  halfMovement: new Set(["prone"]),
   crawl: new Set(["prone", "exceedingCarryingCapacity"]),
   petrification: new Set(["petrified"]),
-  halfHealth: new Set(["exhaustion-4"])
+  halfHealth: new Set([]),
 };
 
 /* -------------------------------------------- */
@@ -2541,54 +2768,54 @@ DND5E.conditionEffects = {
  */
 DND5E.statusEffects = {
   bleeding: {
-    icon: "systems/dnd5e/icons/svg/statuses/bleeding.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/bleeding.svg",
   },
   burrowing: {
     name: "EFFECT.DND5E.StatusBurrowing",
-    icon: "icons/svg/cave.svg"
+    icon: "icons/svg/cave.svg",
   },
   concentrating: {
     name: "EFFECT.DND5E.StatusConcentrating",
-    icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg",
   },
   cursed: {
     name: "EFFECT.DND5E.StatusCursed",
-    icon: "icons/svg/sun.svg"
+    icon: "icons/svg/sun.svg",
   },
   dead: {
-    icon: "systems/dnd5e/icons/svg/statuses/dead.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/dead.svg",
   },
   dodging: {
     name: "EFFECT.DND5E.StatusDodging",
-    icon: "systems/dnd5e/icons/svg/statuses/dodging.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/dodging.svg",
   },
   flying: {
     name: "EFFECT.DND5E.StatusFlying",
-    icon: "icons/svg/wing.svg"
+    icon: "icons/svg/wing.svg",
   },
   hidden: {
     name: "EFFECT.DND5E.StatusHidden",
-    icon: "icons/svg/cowled.svg"
+    icon: "icons/svg/cowled.svg",
   },
   marked: {
     name: "EFFECT.DND5E.StatusMarked",
-    icon: "systems/dnd5e/icons/svg/statuses/marked.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/marked.svg",
   },
   silence: {
-    icon: "systems/dnd5e/icons/svg/statuses/silenced.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/silenced.svg",
   },
   sleeping: {
     name: "EFFECT.DND5E.StatusSleeping",
-    icon: "icons/svg/sleep.svg"
+    icon: "icons/svg/sleep.svg",
   },
   surprised: {
     name: "EFFECT.DND5E.StatusSurprised",
-    icon: "systems/dnd5e/icons/svg/statuses/surprised.svg"
+    icon: "systems/dnd5e/icons/svg/statuses/surprised.svg",
   },
   transformed: {
     name: "EFFECT.DND5E.StatusTransformed",
-    icon: "icons/svg/pawprint.svg"
-  }
+    icon: "icons/svg/pawprint.svg",
+  },
 };
 
 /* -------------------------------------------- */
@@ -2610,8 +2837,8 @@ DND5E.languages = {
       gnomish: "DND5E.LanguagesGnomish",
       goblin: "DND5E.LanguagesGoblin",
       halfling: "DND5E.LanguagesHalfling",
-      orc: "DND5E.LanguagesOrc"
-    }
+      orc: "DND5E.LanguagesOrc",
+    },
   },
   exotic: {
     label: "DND5E.LanguagesExotic",
@@ -2630,15 +2857,15 @@ DND5E.languages = {
           aquan: "DND5E.LanguagesAquan",
           auran: "DND5E.LanguagesAuran",
           ignan: "DND5E.LanguagesIgnan",
-          terran: "DND5E.LanguagesTerran"
-        }
+          terran: "DND5E.LanguagesTerran",
+        },
       },
       sylvan: "DND5E.LanguagesSylvan",
-      undercommon: "DND5E.LanguagesUndercommon"
-    }
+      undercommon: "DND5E.LanguagesUndercommon",
+    },
   },
   druidic: "DND5E.LanguagesDruidic",
-  cant: "DND5E.LanguagesThievesCant"
+  cant: "DND5E.LanguagesThievesCant",
 };
 preLocalize("languages", { key: "label" });
 preLocalize("languages.standard.children", { key: "label", sort: true });
@@ -2666,7 +2893,7 @@ DND5E.maxAbilityScore = 20;
  */
 DND5E.CHARACTER_EXP_LEVELS = [
   0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
-  120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
+  120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
 ];
 
 /**
@@ -2674,8 +2901,9 @@ DND5E.CHARACTER_EXP_LEVELS = [
  * @type {number[]}
  */
 DND5E.CR_EXP_LEVELS = [
-  10, 200, 450, 700, 1100, 1800, 2300, 2900, 3900, 5000, 5900, 7200, 8400, 10000, 11500, 13000, 15000, 18000,
-  20000, 22000, 25000, 33000, 41000, 50000, 62000, 75000, 90000, 105000, 120000, 135000, 155000
+  10, 200, 450, 700, 1100, 1800, 2300, 2900, 3900, 5000, 5900, 7200, 8400,
+  10000, 11500, 13000, 15000, 18000, 20000, 22000, 25000, 33000, 41000, 50000,
+  62000, 75000, 90000, 105000, 120000, 135000, 155000,
 ];
 
 /**
@@ -2723,54 +2951,54 @@ DND5E.traits = {
   saves: {
     labels: {
       title: "DND5E.ClassSaves",
-      localization: "DND5E.TraitSavesPlural"
+      localization: "DND5E.TraitSavesPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-saves.svg",
     actorKeyPath: "system.abilities",
     configKey: "abilities",
-    labelKeyPath: "label"
+    labelKeyPath: "label",
   },
   skills: {
     labels: {
       title: "DND5E.Skills",
-      localization: "DND5E.TraitSkillsPlural"
+      localization: "DND5E.TraitSkillsPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-skills.svg",
     actorKeyPath: "system.skills",
     labelKeyPath: "label",
-    expertise: true
+    expertise: true,
   },
   languages: {
     labels: {
       title: "DND5E.Languages",
-      localization: "DND5E.TraitLanguagesPlural"
+      localization: "DND5E.TraitLanguagesPlural",
     },
-    icon: "systems/dnd5e/icons/svg/trait-languages.svg"
+    icon: "systems/dnd5e/icons/svg/trait-languages.svg",
   },
   armor: {
     labels: {
       title: "DND5E.TraitArmorProf",
-      localization: "DND5E.TraitArmorPlural"
+      localization: "DND5E.TraitArmorPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-armor-proficiencies.svg",
     actorKeyPath: "system.traits.armorProf",
     configKey: "armorProficiencies",
-    subtypes: { keyPath: "armor.type", ids: ["armorIds", "shieldIds"] }
+    subtypes: { keyPath: "armor.type", ids: ["armorIds", "shieldIds"] },
   },
   weapon: {
     labels: {
       title: "DND5E.TraitWeaponProf",
-      localization: "DND5E.TraitWeaponPlural"
+      localization: "DND5E.TraitWeaponPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-weapon-proficiencies.svg",
     actorKeyPath: "system.traits.weaponProf",
     configKey: "weaponProficiencies",
-    subtypes: { keyPath: "weaponType", ids: ["weaponIds"] }
+    subtypes: { keyPath: "weaponType", ids: ["weaponIds"] },
   },
   tool: {
     labels: {
       title: "DND5E.TraitToolProf",
-      localization: "DND5E.TraitToolPlural"
+      localization: "DND5E.TraitToolPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-tool-proficiencies.svg",
     actorKeyPath: "system.tools",
@@ -2778,40 +3006,40 @@ DND5E.traits = {
     subtypes: { keyPath: "toolType", ids: ["toolIds"] },
     children: { vehicle: "vehicleTypes" },
     sortCategories: true,
-    expertise: true
+    expertise: true,
   },
   di: {
     labels: {
       title: "DND5E.DamImm",
-      localization: "DND5E.TraitDIPlural"
+      localization: "DND5E.TraitDIPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-damage-immunities.svg",
-    configKey: "damageTypes"
+    configKey: "damageTypes",
   },
   dr: {
     labels: {
       title: "DND5E.DamRes",
-      localization: "DND5E.TraitDRPlural"
+      localization: "DND5E.TraitDRPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-damage-resistances.svg",
-    configKey: "damageTypes"
+    configKey: "damageTypes",
   },
   dv: {
     labels: {
       title: "DND5E.DamVuln",
-      localization: "DND5E.TraitDVPlural"
+      localization: "DND5E.TraitDVPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-damage-vulnerabilities.svg",
-    configKey: "damageTypes"
+    configKey: "damageTypes",
   },
   ci: {
     labels: {
       title: "DND5E.ConImm",
-      localization: "DND5E.TraitCIPlural"
+      localization: "DND5E.TraitCIPlural",
     },
     icon: "systems/dnd5e/icons/svg/trait-condition-immunities.svg",
-    configKey: "conditionTypes"
-  }
+    configKey: "conditionTypes",
+  },
 };
 preLocalize("traits", { key: "labels.title" });
 
@@ -2824,20 +3052,20 @@ preLocalize("traits", { key: "labels.title" });
 DND5E.traitModes = {
   default: {
     label: "DND5E.AdvancementTraitModeDefaultLabel",
-    hint: "DND5E.AdvancementTraitModeDefaultHint"
+    hint: "DND5E.AdvancementTraitModeDefaultHint",
   },
   expertise: {
     label: "DND5E.AdvancementTraitModeExpertiseLabel",
-    hint: "DND5E.AdvancementTraitModeExpertiseHint"
+    hint: "DND5E.AdvancementTraitModeExpertiseHint",
   },
   forcedExpertise: {
     label: "DND5E.AdvancementTraitModeForceLabel",
-    hint: "DND5E.AdvancementTraitModeForceHint"
+    hint: "DND5E.AdvancementTraitModeForceHint",
   },
   upgrade: {
     label: "DND5E.AdvancementTraitModeUpgradeLabel",
-    hint: "DND5E.AdvancementTraitModeUpgradeHint"
-  }
+    hint: "DND5E.AdvancementTraitModeUpgradeHint",
+  },
 };
 preLocalize("traitModes", { keys: ["label", "hint"] });
 
@@ -2852,92 +3080,92 @@ DND5E.characterFlags = {
     name: "DND5E.FlagsDiamondSoul",
     hint: "DND5E.FlagsDiamondSoulHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   elvenAccuracy: {
     name: "DND5E.FlagsElvenAccuracy",
     hint: "DND5E.FlagsElvenAccuracyHint",
     section: "DND5E.RacialTraits",
     abilities: ["dex", "int", "wis", "cha"],
-    type: Boolean
+    type: Boolean,
   },
   halflingLucky: {
     name: "DND5E.FlagsHalflingLucky",
     hint: "DND5E.FlagsHalflingLuckyHint",
     section: "DND5E.RacialTraits",
-    type: Boolean
+    type: Boolean,
   },
   initiativeAdv: {
     name: "DND5E.FlagsInitiativeAdv",
     hint: "DND5E.FlagsInitiativeAdvHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   initiativeAlert: {
     name: "DND5E.FlagsAlert",
     hint: "DND5E.FlagsAlertHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   jackOfAllTrades: {
     name: "DND5E.FlagsJOAT",
     hint: "DND5E.FlagsJOATHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   observantFeat: {
     name: "DND5E.FlagsObservant",
     hint: "DND5E.FlagsObservantHint",
     skills: ["prc", "inv"],
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   tavernBrawlerFeat: {
     name: "DND5E.FlagsTavernBrawler",
     hint: "DND5E.FlagsTavernBrawlerHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   powerfulBuild: {
     name: "DND5E.FlagsPowerfulBuild",
     hint: "DND5E.FlagsPowerfulBuildHint",
     section: "DND5E.RacialTraits",
-    type: Boolean
+    type: Boolean,
   },
   reliableTalent: {
     name: "DND5E.FlagsReliableTalent",
     hint: "DND5E.FlagsReliableTalentHint",
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   remarkableAthlete: {
     name: "DND5E.FlagsRemarkableAthlete",
     hint: "DND5E.FlagsRemarkableAthleteHint",
     abilities: ["str", "dex", "con"],
     section: "DND5E.Feats",
-    type: Boolean
+    type: Boolean,
   },
   weaponCriticalThreshold: {
     name: "DND5E.FlagsWeaponCritThreshold",
     hint: "DND5E.FlagsWeaponCritThresholdHint",
     section: "DND5E.Feats",
     type: Number,
-    placeholder: 20
+    placeholder: 20,
   },
   spellCriticalThreshold: {
     name: "DND5E.FlagsSpellCritThreshold",
     hint: "DND5E.FlagsSpellCritThresholdHint",
     section: "DND5E.Feats",
     type: Number,
-    placeholder: 20
+    placeholder: 20,
   },
   meleeCriticalDamageDice: {
     name: "DND5E.FlagsMeleeCriticalDice",
     hint: "DND5E.FlagsMeleeCriticalDiceHint",
     section: "DND5E.Feats",
     type: Number,
-    placeholder: 0
-  }
+    placeholder: 0,
+  },
 };
 preLocalize("characterFlags", { keys: ["name", "hint", "section"] });
 
@@ -2945,7 +3173,9 @@ preLocalize("characterFlags", { keys: ["name", "hint", "section"] });
  * Flags allowed on actors. Any flags not in the list may be deleted during a migration.
  * @type {string[]}
  */
-DND5E.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(DND5E.characterFlags));
+DND5E.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(
+  Object.keys(DND5E.characterFlags)
+);
 
 /* -------------------------------------------- */
 
@@ -2955,7 +3185,7 @@ DND5E.allowedActorFlags = ["isPolymorphed", "originalActor"].concat(Object.keys(
  */
 DND5E.groupTypes = {
   party: "DND5E.Group.TypeParty",
-  encounter: "DND5E.Group.TypeEncounter"
+  encounter: "DND5E.Group.TypeEncounter",
 };
 preLocalize("groupTypes");
 
@@ -2978,32 +3208,32 @@ const _ALL_ITEM_TYPES = ["background", "class", "race", "subclass"];
 DND5E.advancementTypes = {
   AbilityScoreImprovement: {
     documentClass: advancement.AbilityScoreImprovementAdvancement,
-    validItemTypes: new Set(["background", "class", "race"])
+    validItemTypes: new Set(["background", "class", "race"]),
   },
   HitPoints: {
     documentClass: advancement.HitPointsAdvancement,
-    validItemTypes: new Set(["class"])
+    validItemTypes: new Set(["class"]),
   },
   ItemChoice: {
     documentClass: advancement.ItemChoiceAdvancement,
-    validItemTypes: new Set(_ALL_ITEM_TYPES)
+    validItemTypes: new Set(_ALL_ITEM_TYPES),
   },
   ItemGrant: {
     documentClass: advancement.ItemGrantAdvancement,
-    validItemTypes: new Set(_ALL_ITEM_TYPES)
+    validItemTypes: new Set(_ALL_ITEM_TYPES),
   },
   ScaleValue: {
     documentClass: advancement.ScaleValueAdvancement,
-    validItemTypes: new Set(_ALL_ITEM_TYPES)
+    validItemTypes: new Set(_ALL_ITEM_TYPES),
   },
   Size: {
     documentClass: advancement.SizeAdvancement,
-    validItemTypes: new Set(["race"])
+    validItemTypes: new Set(["race"]),
   },
   Trait: {
     documentClass: advancement.TraitAdvancement,
-    validItemTypes: new Set(_ALL_ITEM_TYPES)
-  }
+    validItemTypes: new Set(_ALL_ITEM_TYPES),
+  },
 };
 
 /* -------------------------------------------- */
@@ -3025,8 +3255,8 @@ DND5E.defaultArtwork = {
     spell: "systems/dnd5e/icons/svg/items/spell.svg",
     subclass: "systems/dnd5e/icons/svg/items/subclass.svg",
     tool: "systems/dnd5e/icons/svg/items/tool.svg",
-    weapon: "systems/dnd5e/icons/svg/items/weapon.svg"
-  }
+    weapon: "systems/dnd5e/icons/svg/items/weapon.svg",
+  },
 };
 
 /* -------------------------------------------- */
@@ -3048,44 +3278,44 @@ DND5E.defaultArtwork = {
 DND5E.ruleTypes = {
   rule: {
     label: "DND5E.Rule.Type.Rule",
-    references: "rules"
+    references: "rules",
   },
   ability: {
     label: "DND5E.Ability",
-    references: "enrichmentLookup.abilities"
+    references: "enrichmentLookup.abilities",
   },
   areaOfEffect: {
     label: "DND5E.AreaOfEffect",
-    references: "areaTargetTypes"
+    references: "areaTargetTypes",
   },
   condition: {
     label: "DND5E.Rule.Type.Condition",
-    references: "conditionTypes"
+    references: "conditionTypes",
   },
   creatureType: {
     label: "DND5E.CreatureType",
-    references: "creatureTypes"
+    references: "creatureTypes",
   },
   damage: {
     label: "DND5E.DamageType",
-    references: "damageTypes"
+    references: "damageTypes",
   },
   skill: {
     label: "DND5E.Skill",
-    references: "enrichmentLookup.skills"
+    references: "enrichmentLookup.skills",
   },
   spellComponent: {
     label: "DND5E.SpellComponent",
-    references: "itemProperties"
+    references: "itemProperties",
   },
   spellSchool: {
     label: "DND5E.SpellSchool",
-    references: "enrichmentLookup.spellSchools"
+    references: "enrichmentLookup.spellSchools",
   },
   spellTag: {
     label: "DND5E.SpellTag",
-    references: "itemProperties"
-  }
+    references: "itemProperties",
+  },
 };
 preLocalize("ruleTypes", { key: "label" });
 
@@ -3096,151 +3326,287 @@ preLocalize("ruleTypes", { key: "label" });
  * @enum {string}
  */
 DND5E.rules = {
-  inspiration: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.nkEPI89CiQnOaLYh",
-  carryingcapacity: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1PnjDBKbQJIVyc2t",
+  inspiration:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.nkEPI89CiQnOaLYh",
+  carryingcapacity:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1PnjDBKbQJIVyc2t",
   push: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Hni8DjqLzoqsVjb6",
   lift: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Hni8DjqLzoqsVjb6",
   drag: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Hni8DjqLzoqsVjb6",
-  encumbrance: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JwqYf9qb6gJAWZKs",
-  hiding: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.plHuoNdS0j3umPNS",
-  passiveperception: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.988C2hQNyvqkdbND",
+  encumbrance:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JwqYf9qb6gJAWZKs",
+  hiding:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.plHuoNdS0j3umPNS",
+  passiveperception:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.988C2hQNyvqkdbND",
   time: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.eihqNjwpZ3HM4IqY",
-  speed: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HhqeIiSj8sE1v1qZ",
-  travelpace: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.eFAISahBloR2X8MX",
-  forcedmarch: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uQWQpRKQ1kWhuvjZ",
-  difficultterrainpace: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hFW5BR2yHHwwgurD",
-  climbing: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KxUXbMrUCIAhv4AF",
-  swimming: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KxUXbMrUCIAhv4AF",
-  longjump: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1U0myNrOvIVBUdJV",
-  highjump: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.raPwIkqKSv60ELmy",
-  falling: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kREHL5pgNUOhay9f",
-  suffocating: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.BIlnr0xYhqt4TGsi",
-  vision: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.O6hamUbI9kVASN8b",
-  light: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.O6hamUbI9kVASN8b",
-  lightlyobscured: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MAxtfJyvJV7EpzWN",
-  heavilyobscured: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wPFjfRruboxhtL4b",
-  brightlight: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RnMokVPyKGbbL8vi",
-  dimlight: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.n1Ocpbyhr6HhgbCG",
-  darkness: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4dfREIDjG5N4fvxd",
-  blindsight: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.sacjsfm9ZXnw4Tqc",
-  darkvision: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ldmA1PbnEGVkmE11",
-  tremorsense: "Compendium.dnd5e.rules.JournalEntry.eVtpEGXjA2tamEIJ.JournalEntryPage.8AIlZ95v54mL531X",
-  truesight: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kNa8rJFbtaTM3Rmk",
+  speed:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HhqeIiSj8sE1v1qZ",
+  travelpace:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.eFAISahBloR2X8MX",
+  forcedmarch:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uQWQpRKQ1kWhuvjZ",
+  difficultterrainpace:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hFW5BR2yHHwwgurD",
+  climbing:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KxUXbMrUCIAhv4AF",
+  swimming:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KxUXbMrUCIAhv4AF",
+  longjump:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1U0myNrOvIVBUdJV",
+  highjump:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.raPwIkqKSv60ELmy",
+  falling:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kREHL5pgNUOhay9f",
+  suffocating:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.BIlnr0xYhqt4TGsi",
+  vision:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.O6hamUbI9kVASN8b",
+  light:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.O6hamUbI9kVASN8b",
+  lightlyobscured:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MAxtfJyvJV7EpzWN",
+  heavilyobscured:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wPFjfRruboxhtL4b",
+  brightlight:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RnMokVPyKGbbL8vi",
+  dimlight:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.n1Ocpbyhr6HhgbCG",
+  darkness:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4dfREIDjG5N4fvxd",
+  blindsight:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.sacjsfm9ZXnw4Tqc",
+  darkvision:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ldmA1PbnEGVkmE11",
+  tremorsense:
+    "Compendium.dnd5e.rules.JournalEntry.eVtpEGXjA2tamEIJ.JournalEntryPage.8AIlZ95v54mL531X",
+  truesight:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kNa8rJFbtaTM3Rmk",
   food: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jayo7XVgGnRCpTW0",
-  water: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iIEI87J7lr2sqtb5",
-  resting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.dpHJXYLigIdEseIb",
-  shortrest: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1s2swI3UsjUUgbt2",
-  longrest: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6cLtjbHn4KV2R7G9",
-  surprise: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.YmOt8HderKveA19K",
-  initiative: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RcwElV4GAcVXKWxo",
-  bonusaction: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2fu2CXsDg8gQmGGw",
-  reaction: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2VqLyxMyMxgXe2wC",
-  difficultterrain: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6tqz947qO8vPyxvD",
-  beingprone: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.bV8akkBdVUUG21CO",
-  droppingprone: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hwTLpAtSS5OqQsI1",
-  standingup: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hwTLpAtSS5OqQsI1",
-  crawling: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.VWG9qe8PUNtS28Pw",
-  movingaroundothercreatures: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9ZWCknaXCOdhyOrX",
-  flying: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.0B1fxfmw0a48tPsc",
+  water:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iIEI87J7lr2sqtb5",
+  resting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.dpHJXYLigIdEseIb",
+  shortrest:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.1s2swI3UsjUUgbt2",
+  longrest:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6cLtjbHn4KV2R7G9",
+  surprise:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.YmOt8HderKveA19K",
+  initiative:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RcwElV4GAcVXKWxo",
+  bonusaction:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2fu2CXsDg8gQmGGw",
+  reaction:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2VqLyxMyMxgXe2wC",
+  difficultterrain:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6tqz947qO8vPyxvD",
+  beingprone:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.bV8akkBdVUUG21CO",
+  droppingprone:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hwTLpAtSS5OqQsI1",
+  standingup:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hwTLpAtSS5OqQsI1",
+  crawling:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.VWG9qe8PUNtS28Pw",
+  movingaroundothercreatures:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9ZWCknaXCOdhyOrX",
+  flying:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.0B1fxfmw0a48tPsc",
   size: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HWHRQVBVG7K0RVVW",
-  space: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.WIA5bs3P45PmO3OS",
-  squeezing: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wKtOwagDAiNfVoPS",
-  attack: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.u4GQCzoBig20yRLj",
-  castaspell: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GLwN36E4WXn3Cp4Z",
+  space:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.WIA5bs3P45PmO3OS",
+  squeezing:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wKtOwagDAiNfVoPS",
+  attack:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.u4GQCzoBig20yRLj",
+  castaspell:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GLwN36E4WXn3Cp4Z",
   dash: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Jqn0MEvq6fduYNo6",
-  disengage: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ZOPRfI48NyjoloEF",
-  dodge: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.V1BkwK2HQrtEfa4d",
+  disengage:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ZOPRfI48NyjoloEF",
+  dodge:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.V1BkwK2HQrtEfa4d",
   help: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KnrD3u2AnQfmtOWj",
   hide: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.BXlHhE4ZoiFwiXLK",
-  ready: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8xJzZVelP2AmQGfU",
-  search: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5cn1ZTLgQq95vfZx",
-  useanobject: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ljqhJx8Qxu2ivo69",
-  attackrolls: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5wkqEqhbBD5kDeE7",
-  unseenattackers: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5ZJNwEPlsGurecg5",
-  unseentargets: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5ZJNwEPlsGurecg5",
-  rangedattacks: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.S9aclVOCbusLE3kC",
-  range: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HjKXuB8ndjcqOds7",
-  rangedattacksinclosecombat: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qEZvxW0NM7ixSQP5",
-  meleeattacks: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GTk6emvzNxl8Oosl",
-  reach: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hgZ5ZN4B3y7tmFlt",
-  unarmedstrike: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xJjJ4lhymAYXAOvO",
-  opportunityattacks: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zeU0NyCyP10lkLg3",
-  twoweaponfighting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FQTS08uH74A6psL2",
-  grappling: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Sl4bniSPSbyrakM2",
-  escapingagrapple: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2TZKy9YbMN3ZY3h8",
-  movingagrappledcreature: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.x5bUdhAD7u5Bt2rg",
-  shoving: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hrdqMF8hRXJdNzJx",
-  cover: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.W7f7PcRubNUMIq2S",
-  halfcover: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hv0J61IAfofuhy3Q",
-  threequarterscover: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zAMStUjUrPV10dFm",
-  totalcover: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.BKUAxXuPEzxiEOeL",
-  hitpoints: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.PFbzoMBviI2DD9QP",
-  damagerolls: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hd26AqKrCqtcQBWy",
-  criticalhits: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.gFL1VhSEljL1zvje",
-  damagetypes: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jVOgf7DNEhkzYNIe",
-  damageresistance: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v0WE18nT5SJO8Ft7",
-  damagevulnerability: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v0WE18nT5SJO8Ft7",
-  healing: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ICketFqbFslqKiX9",
-  instantdeath: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8BG05mA0mEzwmrHU",
-  deathsavingthrows: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JL8LePEJQYFdNuLL",
-  deathsaves: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JL8LePEJQYFdNuLL",
-  stabilizing: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.r1CgZXLcqFop6Dlx",
-  knockingacreatureout: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uEwjgKGuCRTNADYv",
-  temporaryhitpoints: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AW6HpJZHqxfESXaq",
-  temphp: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AW6HpJZHqxfESXaq",
-  mounting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MFpyvUIdcBpC9kIE",
-  dismounting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MFpyvUIdcBpC9kIE",
-  controllingamount: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.khmR2xFk1NxoQUgZ",
-  underwatercombat: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6zVOeLyq4iMnrQT4",
-  spelllevel: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.A6k5fS0kFqPXTW3v",
-  knownspells: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.oezg742GlxmEwT85",
-  preparedspells: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.oezg742GlxmEwT85",
-  spellslots: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Su6wbb0O9UN4ZDIH",
-  castingatahigherlevel: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4H9SLM95OCLfFizz",
-  upcasting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4H9SLM95OCLfFizz",
-  castinginarmor: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.z4A8vHSK2pb8YA9X",
-  cantrips: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jZD5mCTnMPJ9jW67",
-  rituals: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA",
-  castingtime: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zRVW8Tvyk6BECjZD",
-  bonusactioncasting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RP1WL9FXI3aknlxZ",
-  reactioncasting: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.t62lCfinwU9H7Lji",
-  longercastingtimes: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.gOAIRFCyPUx42axn",
-  spellrange: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RBYPyE5z5hAZSbH6",
-  components: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xeHthAF9lxfn2tII",
-  verbal: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx",
-  spellduration: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9mp0SRsptjvJcq1e",
-  instantaneous: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kdlgZOpRMB6bGCod",
-  concentrating: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH",
-  spelltargets: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.G80AIQr04sxdVpw4",
-  areaofeffect: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wvtCeGHgnUmh0cuj",
-  pointoforigin: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8HxbRceQQUAhyWRt",
-  spellsavingthrows: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8DajfNll90eeKcmB",
-  spellattackrolls: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qAFzmGZKhVvAEUF3",
-  combiningmagicaleffects: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TMIN963hG773yZzO",
-  schoolsofmagic: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TeF6CKMDRpYpsLd4",
-  detectingtraps: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DZ7AhdQ94xggG4bj",
-  disablingtraps: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DZ7AhdQ94xggG4bj",
-  curingmadness: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6Icem7G3CICdNOkM",
-  damagethreshold: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9LJZhqvCburpags3",
-  poisontypes: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.I6OMMWUaYCWR9xip",
-  contactpoison: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kXnCEqqGUWRZeZDj",
-  ingestedpoison: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Y0vsJYSWeQcFpJ27",
-  inhaledpoison: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KUyN4eK1xTBzXsjP",
-  injurypoison: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.LUL48OUq6SJeMGc7",
-  attunement: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.UQ65OwIyGK65eiOK",
-  wearingitems: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iPB8mGKuQx3X0Z2J",
-  wieldingitems: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iPB8mGKuQx3X0Z2J",
-  multipleitemsofthesamekind: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rLJdvz4Mde8GkEYQ",
-  paireditems: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rd9pCH8yFraSGN34",
-  commandword: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HiXixxLYesv6Ff3t",
-  consumables: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.UEPAcZFzQ5x196zE",
-  itemspells: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DABoaeeF6w31UCsj",
-  charges: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.NLRXcgrpRCfsA5mO",
-  creaturetags: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9jV1fFF163dr68vd",
-  telepathy: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.geTidcFIYWuUvD2L",
-  legendaryactions: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.C1awOyZh78pq1xmY",
-  lairactions: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.07PtjpMxiRIhkBEp",
-  regionaleffects: "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uj8W27NKFyzygPUd"
+  ready:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8xJzZVelP2AmQGfU",
+  search:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5cn1ZTLgQq95vfZx",
+  useanobject:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ljqhJx8Qxu2ivo69",
+  attackrolls:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5wkqEqhbBD5kDeE7",
+  unseenattackers:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5ZJNwEPlsGurecg5",
+  unseentargets:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.5ZJNwEPlsGurecg5",
+  rangedattacks:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.S9aclVOCbusLE3kC",
+  range:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HjKXuB8ndjcqOds7",
+  rangedattacksinclosecombat:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qEZvxW0NM7ixSQP5",
+  meleeattacks:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.GTk6emvzNxl8Oosl",
+  reach:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hgZ5ZN4B3y7tmFlt",
+  unarmedstrike:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xJjJ4lhymAYXAOvO",
+  opportunityattacks:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zeU0NyCyP10lkLg3",
+  twoweaponfighting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FQTS08uH74A6psL2",
+  grappling:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Sl4bniSPSbyrakM2",
+  escapingagrapple:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.2TZKy9YbMN3ZY3h8",
+  movingagrappledcreature:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.x5bUdhAD7u5Bt2rg",
+  shoving:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hrdqMF8hRXJdNzJx",
+  cover:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.W7f7PcRubNUMIq2S",
+  halfcover:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hv0J61IAfofuhy3Q",
+  threequarterscover:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zAMStUjUrPV10dFm",
+  totalcover:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.BKUAxXuPEzxiEOeL",
+  hitpoints:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.PFbzoMBviI2DD9QP",
+  damagerolls:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.hd26AqKrCqtcQBWy",
+  criticalhits:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.gFL1VhSEljL1zvje",
+  damagetypes:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jVOgf7DNEhkzYNIe",
+  damageresistance:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v0WE18nT5SJO8Ft7",
+  damagevulnerability:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.v0WE18nT5SJO8Ft7",
+  healing:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ICketFqbFslqKiX9",
+  instantdeath:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8BG05mA0mEzwmrHU",
+  deathsavingthrows:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JL8LePEJQYFdNuLL",
+  deathsaves:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.JL8LePEJQYFdNuLL",
+  stabilizing:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.r1CgZXLcqFop6Dlx",
+  knockingacreatureout:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uEwjgKGuCRTNADYv",
+  temporaryhitpoints:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AW6HpJZHqxfESXaq",
+  temphp:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.AW6HpJZHqxfESXaq",
+  mounting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MFpyvUIdcBpC9kIE",
+  dismounting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.MFpyvUIdcBpC9kIE",
+  controllingamount:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.khmR2xFk1NxoQUgZ",
+  underwatercombat:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6zVOeLyq4iMnrQT4",
+  spelllevel:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.A6k5fS0kFqPXTW3v",
+  knownspells:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.oezg742GlxmEwT85",
+  preparedspells:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.oezg742GlxmEwT85",
+  spellslots:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Su6wbb0O9UN4ZDIH",
+  castingatahigherlevel:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4H9SLM95OCLfFizz",
+  upcasting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.4H9SLM95OCLfFizz",
+  castinginarmor:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.z4A8vHSK2pb8YA9X",
+  cantrips:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.jZD5mCTnMPJ9jW67",
+  rituals:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.FjWqT5iyJ89kohdA",
+  castingtime:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.zRVW8Tvyk6BECjZD",
+  bonusactioncasting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RP1WL9FXI3aknlxZ",
+  reactioncasting:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.t62lCfinwU9H7Lji",
+  longercastingtimes:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.gOAIRFCyPUx42axn",
+  spellrange:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.RBYPyE5z5hAZSbH6",
+  components:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.xeHthAF9lxfn2tII",
+  verbal:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6UXTNWMCQ0nSlwwx",
+  spellduration:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9mp0SRsptjvJcq1e",
+  instantaneous:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kdlgZOpRMB6bGCod",
+  concentrating:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.ow58p27ctAnr4VPH",
+  spelltargets:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.G80AIQr04sxdVpw4",
+  areaofeffect:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.wvtCeGHgnUmh0cuj",
+  pointoforigin:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8HxbRceQQUAhyWRt",
+  spellsavingthrows:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.8DajfNll90eeKcmB",
+  spellattackrolls:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.qAFzmGZKhVvAEUF3",
+  combiningmagicaleffects:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TMIN963hG773yZzO",
+  schoolsofmagic:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.TeF6CKMDRpYpsLd4",
+  detectingtraps:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DZ7AhdQ94xggG4bj",
+  disablingtraps:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DZ7AhdQ94xggG4bj",
+  curingmadness:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.6Icem7G3CICdNOkM",
+  damagethreshold:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9LJZhqvCburpags3",
+  poisontypes:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.I6OMMWUaYCWR9xip",
+  contactpoison:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.kXnCEqqGUWRZeZDj",
+  ingestedpoison:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.Y0vsJYSWeQcFpJ27",
+  inhaledpoison:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.KUyN4eK1xTBzXsjP",
+  injurypoison:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.LUL48OUq6SJeMGc7",
+  attunement:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.UQ65OwIyGK65eiOK",
+  wearingitems:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iPB8mGKuQx3X0Z2J",
+  wieldingitems:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.iPB8mGKuQx3X0Z2J",
+  multipleitemsofthesamekind:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rLJdvz4Mde8GkEYQ",
+  paireditems:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.rd9pCH8yFraSGN34",
+  commandword:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.HiXixxLYesv6Ff3t",
+  consumables:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.UEPAcZFzQ5x196zE",
+  itemspells:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.DABoaeeF6w31UCsj",
+  charges:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.NLRXcgrpRCfsA5mO",
+  creaturetags:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.9jV1fFF163dr68vd",
+  telepathy:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.geTidcFIYWuUvD2L",
+  legendaryactions:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.C1awOyZh78pq1xmY",
+  lairactions:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.07PtjpMxiRIhkBEp",
+  regionaleffects:
+    "Compendium.dnd5e.rules.JournalEntry.NizgRXLNUqtdlC1s.JournalEntryPage.uj8W27NKFyzygPUd",
 };
 
 /* -------------------------------------------- */
@@ -3263,10 +3629,10 @@ DND5E.tokenRings = {
   effects: {
     RING_PULSE: "DND5E.TokenRings.Effects.RingPulse",
     RING_GRADIENT: "DND5E.TokenRings.Effects.RingGradient",
-    BKG_WAVE: "DND5E.TokenRings.Effects.BackgroundWave"
+    BKG_WAVE: "DND5E.TokenRings.Effects.BackgroundWave",
   },
   spriteSheet: "systems/dnd5e/tokens/composite/token-rings.json",
-  shaderClass: null
+  shaderClass: null,
 };
 preLocalize("tokenRings.effects");
 
@@ -3279,7 +3645,7 @@ preLocalize("tokenRings.effects");
  * @enum {string}
  */
 DND5E.sourceBooks = {
-  "SRD 5.1": "SOURCE.BOOK.SRD"
+  "SRD 5.1": "SOURCE.BOOK.SRD",
 };
 preLocalize("sourceBooks", { sort: true });
 
@@ -3290,24 +3656,26 @@ preLocalize("sourceBooks", { sort: true });
 let _enrichmentLookup;
 Object.defineProperty(DND5E, "enrichmentLookup", {
   get() {
-    const slugify = value => value?.slugify().replaceAll("-", "");
-    if ( !_enrichmentLookup ) {
+    const slugify = (value) => value?.slugify().replaceAll("-", "");
+    if (!_enrichmentLookup) {
       _enrichmentLookup = {
         abilities: foundry.utils.deepClone(DND5E.abilities),
         skills: foundry.utils.deepClone(DND5E.skills),
         spellSchools: foundry.utils.deepClone(DND5E.spellSchools),
-        tools: foundry.utils.deepClone(DND5E.toolIds)
+        tools: foundry.utils.deepClone(DND5E.toolIds),
       };
-      const addFullKeys = key => Object.entries(DND5E[key]).forEach(([k, v]) =>
-        _enrichmentLookup[key][slugify(v.fullKey)] = { ...v, key: k }
-      );
+      const addFullKeys = (key) =>
+        Object.entries(DND5E[key]).forEach(
+          ([k, v]) =>
+            (_enrichmentLookup[key][slugify(v.fullKey)] = { ...v, key: k })
+        );
       addFullKeys("abilities");
       addFullKeys("skills");
       addFullKeys("spellSchools");
     }
     return _enrichmentLookup;
   },
-  enumerable: true
+  enumerable: true,
 });
 
 /* -------------------------------------------- */
@@ -3322,14 +3690,15 @@ Object.defineProperty(DND5E, "enrichmentLookup", {
 function patchConfig(key, fallbackKey, options) {
   /** @override */
   function toString() {
-    const message = `The value of CONFIG.DND5E.${key} has been changed to an object.`
-      +` The former value can be acccessed from .${fallbackKey}.`;
+    const message =
+      `The value of CONFIG.DND5E.${key} has been changed to an object.` +
+      ` The former value can be acccessed from .${fallbackKey}.`;
     foundry.utils.logCompatibilityWarning(message, options);
     return this[fallbackKey];
   }
 
-  Object.values(DND5E[key]).forEach(o => {
-    if ( foundry.utils.getType(o) !== "Object" ) return;
+  Object.values(DND5E[key]).forEach((o) => {
+    if (foundry.utils.getType(o) !== "Object") return;
     o.toString = toString;
   });
 }

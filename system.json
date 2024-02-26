@@ -7,9 +7,9 @@
     "minimum": "11.315",
     "verified": "12"
   },
-  "url": "https://github.com/foundryvtt/dnd5e/",
-  "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
-  "download": "https://github.com/foundryvtt/dnd5e/releases/download/release-3.0.3/dnd5e-release-3.0.3.zip",
+  "url": "https://github.com/GabrielMartinMoran/foundryvtt_dnd5e/",
+  "manifest": "https://raw.githubusercontent.com/GabrielMartinMoran/foundryvtt_dnd5e/master/system.json",
+  "download": "https://github.com/GabrielMartinMoran/foundryvtt_dnd5e/releases/download/release-3.0.3/dnd5e-release-3.0.3.zip",
   "authors": [
     {
       "name": "Atropos",

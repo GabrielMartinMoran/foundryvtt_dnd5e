@@ -463,8 +463,16 @@
             align-items: start;
             justify-content: space-between;
             position: relative;
+            padding-bottom: 0.625rem;
+            
 
             /* Exhaustion */
+            .pips {
+              flex-flow: wrap;
+              align-items: center;
+              justify-content: center;
+            }
+
             .pips .pip.filled.death::before {
               content: "\f54c";
               font-family: var(--font-awesome);
