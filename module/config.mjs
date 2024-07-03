@@ -2944,7 +2944,6 @@ DND5E.statusEffects = {
     name: "EFFECT.DND5E.StatusConcentrating",
     icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg",
     special: "CONCENTRATING"
-    icon: "systems/dnd5e/icons/svg/statuses/concentrating.svg",
   },
   cursed: {
     name: "EFFECT.DND5E.StatusCursed",
@@ -2954,7 +2953,6 @@ DND5E.statusEffects = {
     name: "EFFECT.DND5E.StatusDead",
     icon: "systems/dnd5e/icons/svg/statuses/dead.svg",
     special: "DEFEATED"
-    icon: "systems/dnd5e/icons/svg/statuses/dead.svg",
   },
   dodging: {
     name: "EFFECT.DND5E.StatusDodging",
