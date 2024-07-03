@@ -1,6 +1,5 @@
 import ActorSheet5e from "./base-sheet.mjs";
 import ActorTypeConfig from "./type-config.mjs";
-import AdvancementConfirmationDialog from "../advancement/advancement-confirmation-dialog.mjs";
 import AdvancementManager from "../advancement/advancement-manager.mjs";
 
 /**
@@ -55,38 +54,39 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
 
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {};
-    for ( const type of ["weapon", "equipment", "consumable", "tool", "container", "loot"] ) {
+    const inventoryTypes = Object.entries(CONFIG.Item.dataModels)
+      .filter(([, model]) => model.metadata?.inventoryItem)
+      .sort(([, lhs], [, rhs]) => (lhs.metadata.inventoryOrder - rhs.metadata.inventoryOrder));
+    for ( const [type] of inventoryTypes ) {
       inventory[type] = {label: `${CONFIG.Item.typeLabels[type]}Pl`, items: [], dataset: {type}};
     }
 
     // Partition items by category
     let {items, spells, feats, races, backgrounds, classes, subclasses} = context.items.reduce((obj, item) => {
-      const {quantity, uses, recharge} = item.system;
+      const {quantity, uses} = item.system;
 
       // Item details
       const ctx = context.itemContext[item.id] ??= {};
       ctx.isStack = Number.isNumeric(quantity) && (quantity !== 1);
-      ctx.attunement = {
-        [CONFIG.DND5E.attunementTypes.REQUIRED]: {
-          icon: "fa-sun",
-          cls: "not-attuned",
-          title: "DND5E.AttunementRequired"
-        },
-        [CONFIG.DND5E.attunementTypes.ATTUNED]: {
-          icon: "fa-sun",
-          cls: "attuned",
-          title: "DND5E.AttunementAttuned"
-        }
-      }[item.system.attunement];
+      if ( item.system.attunement ) ctx.attunement = item.system.attuned ? {
+        icon: "fa-sun",
+        cls: "attuned",
+        title: "DND5E.AttunementAttuned"
+      } : {
+        icon: "fa-sun",
+        cls: "not-attuned",
+        title: CONFIG.DND5E.attunementTypes[item.system.attunement]
+      };
 
       // Prepare data needed to display expanded sections
       ctx.isExpanded = this._expanded.has(item.id);
 
       // Item usage
       ctx.hasUses = item.hasLimitedUses;
-      ctx.isOnCooldown = recharge && !!recharge.value && (recharge.charged === false);
-      ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && (uses.value > 0);
       ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+
+      // Unidentified items
+      ctx.concealDetails = !game.user.isGM && (item.system.identified === false);
 
       // Item grouping
       const [originId] = item.getFlag("dnd5e", "advancementOrigin")?.split(".") ?? [];
@@ -217,7 +217,6 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
   activateListeners(html) {
     super.activateListeners(html);
     if ( !this.isEditable ) return;
-    html.find(".level-selector").change(this._onLevelChange.bind(this));
     html.find(".short-rest").click(this._onShortRest.bind(this));
     html.find(".long-rest").click(this._onLongRest.bind(this));
     html.find(".rollable[data-action]").click(this._onSheetAction.bind(this));
@@ -259,36 +258,6 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
       case "rollInitiative":
         return this.actor.rollInitiativeDialog({event});
     }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Respond to a new level being selected from the level selector.
-   * @param {Event} event                           The originating change.
-   * @returns {Promise<AdvancementManager|Item5e>}  Manager if advancements needed, otherwise updated class item.
-   * @private
-   */
-  async _onLevelChange(event) {
-    event.preventDefault();
-    const delta = Number(event.target.value);
-    const classId = event.target.closest("[data-item-id]")?.dataset.itemId;
-    if ( !delta || !classId ) return;
-    const classItem = this.actor.items.get(classId);
-    if ( !game.settings.get("dnd5e", "disableAdvancements") ) {
-      const manager = AdvancementManager.forLevelChange(this.actor, classId, delta);
-      if ( manager.steps.length ) {
-        if ( delta > 0 ) return manager.render(true);
-        try {
-          const shouldRemoveAdvancements = await AdvancementConfirmationDialog.forLevelDown(classItem);
-          if ( shouldRemoveAdvancements ) return manager.render(true);
-        }
-        catch(err) {
-          return;
-        }
-      }
-    }
-    return classItem.update({"system.levels": classItem.system.levels + delta});
   }
 
   /* -------------------------------------------- */

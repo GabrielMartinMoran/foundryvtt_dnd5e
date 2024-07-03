@@ -15,7 +15,10 @@
       "license": "CC-BY-4.0"
     },
     "quantity": 1,
-    "weight": 20,
+    "weight": {
+      "value": 20,
+      "units": "lb"
+    },
     "price": {
       "value": 1900,
       "denomination": "gp"
@@ -62,7 +65,6 @@
     },
     "ability": null,
     "actionType": "",
-    "attackBonus": "",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -79,8 +81,9 @@
       "scaling": "spell"
     },
     "armor": {
-      "value": 15,
-      "dex": 2
+      "value": 14,
+      "dex": 2,
+      "magicalBonus": 1
     },
     "hp": {
       "value": 0,
@@ -104,7 +107,13 @@
     "container": null,
     "properties": [
       "mgc"
-    ]
+    ],
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "enchantment": null
   },
   "effects": [],
   "folder": "JqTP017wj3uxDJ8g",
@@ -115,10 +124,10 @@
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.0.1",
+    "systemVersion": "3.2.0",
     "coreVersion": "11.315",
     "createdTime": 1661787233486,
-    "modifiedTime": 1707055839751,
+    "modifiedTime": 1715374580032,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!items!84z9mVy1mCipUWEY"

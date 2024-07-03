@@ -15,7 +15,10 @@
       "license": "CC-BY-4.0"
     },
     "quantity": 1,
-    "weight": 4,
+    "weight": {
+      "value": 4,
+      "units": "lb"
+    },
     "price": {
       "value": 95500,
       "denomination": "gp"
@@ -61,7 +64,6 @@
     },
     "ability": "",
     "actionType": "mwak",
-    "attackBonus": "2",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -70,11 +72,11 @@
     "damage": {
       "parts": [
         [
-          "1d6 + @mod + 2",
+          "1d6 + @mod",
           "bludgeoning"
         ]
       ],
-      "versatile": "1d8 + @mod + 2"
+      "versatile": "1d8 + @mod"
     },
     "formula": "",
     "save": {
@@ -104,7 +106,14 @@
       "description": ""
     },
     "container": null,
-    "crewed": false
+    "crewed": false,
+    "magicalBonus": 2,
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "enchantment": null
   },
   "effects": [
     {
@@ -146,10 +155,10 @@
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.0.0",
+    "systemVersion": "3.2.0",
     "coreVersion": "11.315",
     "createdTime": 1661787233783,
-    "modifiedTime": 1704823157214,
+    "modifiedTime": 1715374627567,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!items!eM5gEe4SEOvA2Y9t"

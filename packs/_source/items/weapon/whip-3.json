@@ -15,7 +15,10 @@
       "license": "CC-BY-4.0"
     },
     "quantity": 1,
-    "weight": 3,
+    "weight": {
+      "value": 3,
+      "units": "lb"
+    },
     "price": {
       "value": 16000,
       "denomination": "gp"
@@ -61,7 +64,6 @@
     },
     "ability": null,
     "actionType": "mwak",
-    "attackBonus": "3",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -70,7 +72,7 @@
     "damage": {
       "parts": [
         [
-          "1d4 + @mod +3",
+          "1d4 + @mod",
           "slashing"
         ]
       ],
@@ -105,7 +107,14 @@
       "description": ""
     },
     "container": null,
-    "crewed": false
+    "crewed": false,
+    "magicalBonus": 3,
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "enchantment": null
   },
   "effects": [],
   "folder": "MLMTCAvKsuFE3vYA",
@@ -116,10 +125,10 @@
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.0.0",
+    "systemVersion": "3.2.0",
     "coreVersion": "11.315",
     "createdTime": 1661787233830,
-    "modifiedTime": 1704823159813,
+    "modifiedTime": 1715374636413,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!items!jcQqI0pxLD2nNNQ4"

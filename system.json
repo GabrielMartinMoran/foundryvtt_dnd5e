@@ -2,14 +2,14 @@
   "id": "dnd5e",
   "title": "Dungeons & Dragons Fifth Edition (Modified for Rol Libre)",
   "description": "A system for playing the fifth edition of the world's most popular role-playing game in the Foundry Virtual Tabletop environment.",
-  "version": "3.0.3",
+  "version": "3.2.1",
   "compatibility": {
     "minimum": "11.315",
     "verified": "12"
   },
   "url": "https://github.com/GabrielMartinMoran/foundryvtt_dnd5e/",
   "manifest": "https://raw.githubusercontent.com/GabrielMartinMoran/foundryvtt_dnd5e/master/system.json",
-  "download": "https://github.com/GabrielMartinMoran/foundryvtt_dnd5e/releases/download/release-3.0.3/dnd5e-release-3.0.3.zip",
+  "download": "https://github.com/GabrielMartinMoran/foundryvtt_dnd5e/releases/download/release-3.2.1/dnd5e-release-3.2.1.zip",
   "authors": [
     {
       "name": "Atropos",
@@ -212,10 +212,14 @@
   "socket": true,
   "gridDistance": 5,
   "gridUnits": "ft",
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
   "primaryTokenAttribute": "attributes.hp",
   "background": "systems/dnd5e/ui/official/dnd5e-background.webp",
   "flags": {
-    "needsMigrationVersion": "3.0.3",
+    "needsMigrationVersion": "3.1.0",
     "compatibleMigrationVersion": "0.8",
     "hotReload": {
       "extensions": ["css", "hbs", "json"],

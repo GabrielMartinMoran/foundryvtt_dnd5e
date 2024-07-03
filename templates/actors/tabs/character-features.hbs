@@ -61,7 +61,7 @@
 </section>
 
 {{!-- Features --}}
-<{{elements.inventory}} v2>
+<{{elements.inventory}} class="inventory-element" v2>
 
     {{!-- Searching, Filtering, & Sorting --}}
     <item-list-controls for="features" label="{{ localize "DND5E.FeatureSearch" }}" sort="toggle" group
@@ -124,13 +124,21 @@
                     </div>
 
                     {{!-- Item Uses --}}
-                    <div class="item-detail item-uses {{#unless ctx.hasUses}}empty{{/unless}}">
-                        {{#if ctx.hasUses}}
+                    {{#if item.isOnCooldown}}
+                    <div class="item-detail item-uses" data-tooltip-direction="LEFT" data-tooltip="{{item.labels.recharge}}" aria-label="{{item.labels.recharge}}">
+                        <a class="item-action" data-action="recharge"><i class="fa-solid fa-arrows-rotate"></i></a>
+                    {{else if item.system.recharge.value}}
+                    <div class="item-detail item-uses" data-tooltip-direction="LEFT" data-tooltip="{{item.labels.recharge}}" aria-label="{{item.labels.recharge}}">
+                        <i class="fa-solid fa-bolt"></i>
+                    {{else if ctx.hasUses}}
+                    <div class="item-detail item-uses">
                         <input type="text" value="{{ item.system.uses.value }}" placeholder="0" data-dtype="Number"
-                               data-name="system.uses.value" inputmode="numeric" pattern="[0-9+=\-]*">
+                               data-name="system.uses.value" inputmode="numeric" pattern="[+=\-]?\d*">
                         <span class="separator">&sol;</span>
                         <span class="max">{{ item.system.uses.max }}</span>
-                        {{/if}}
+                    {{else}}
+                    <div class="item-detail item-uses empty">
+                    {{/if}}
                     </div>
 
                     {{!-- Item Recovery --}}

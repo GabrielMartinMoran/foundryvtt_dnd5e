@@ -9,6 +9,8 @@ import PhysicalItemTemplate from "./templates/physical-item.mjs";
 import MountableTemplate from "./templates/mountable.mjs";
 import ItemTypeField from "./fields/item-type-field.mjs";
 
+const { NumberField, SchemaField, SetField, StringField } = foundry.data.fields;
+
 /**
  * Data definition for Equipment items.
  * @mixes ItemDescriptionTemplate
@@ -20,15 +22,16 @@ import ItemTypeField from "./fields/item-type-field.mjs";
  * @mixes ActionTemplate
  * @mixes MountableTemplate
  *
- * @property {object} armor             Armor details and equipment type information.
- * @property {number} armor.value       Base armor class or shield bonus.
- * @property {number} armor.dex         Maximum dex bonus added to armor class.
- * @property {object} speed             Speed granted by a piece of vehicle equipment.
- * @property {number} speed.value       Speed granted by this piece of equipment measured in feet or meters
- *                                      depending on system setting.
- * @property {string} speed.conditions  Conditions that may affect item's speed.
- * @property {number} strength          Minimum strength required to use a piece of armor.
- * @property {number} proficient        Does the owner have proficiency in this piece of equipment?
+ * @property {object} armor               Armor details and equipment type information.
+ * @property {number} armor.value         Base armor class or shield bonus.
+ * @property {number} armor.dex           Maximum dex bonus added to armor class.
+ * @property {number} armor.magicalBonus  Bonus added to AC from the armor's magical nature.
+ * @property {object} speed               Speed granted by a piece of vehicle equipment.
+ * @property {number} speed.value         Speed granted by this piece of equipment measured in feet or meters
+ *                                        depending on system setting.
+ * @property {string} speed.conditions    Conditions that may affect item's speed.
+ * @property {number} strength            Minimum strength required to use a piece of armor.
+ * @property {number} proficient          Does the owner have proficiency in this piece of equipment?
  */
 export default class EquipmentData extends ItemDataModel.mixin(
   ItemDescriptionTemplate, IdentifiableTemplate, ItemTypeTemplate, PhysicalItemTemplate, EquippableItemTemplate,
@@ -38,25 +41,35 @@ export default class EquipmentData extends ItemDataModel.mixin(
   static defineSchema() {
     return this.mergeSchema(super.defineSchema(), {
       type: new ItemTypeField({value: "light", subtype: false}, {label: "DND5E.ItemEquipmentType"}),
-      armor: new foundry.data.fields.SchemaField({
-        value: new foundry.data.fields.NumberField({required: true, integer: true, min: 0, label: "DND5E.ArmorClass"}),
-        dex: new foundry.data.fields.NumberField({required: true, integer: true, label: "DND5E.ItemEquipmentDexMod"})
+      armor: new SchemaField({
+        value: new NumberField({required: true, integer: true, min: 0, label: "DND5E.ArmorClass"}),
+        magicalBonus: new NumberField({min: 0, integer: true, label: "DND5E.MagicalBonus"}),
+        dex: new NumberField({required: true, integer: true, label: "DND5E.ItemEquipmentDexMod"})
       }),
-      properties: new foundry.data.fields.SetField(new foundry.data.fields.StringField(), {
+      properties: new SetField(new StringField(), {
         label: "DND5E.ItemEquipmentProperties"
       }),
-      speed: new foundry.data.fields.SchemaField({
-        value: new foundry.data.fields.NumberField({required: true, min: 0, label: "DND5E.Speed"}),
-        conditions: new foundry.data.fields.StringField({required: true, label: "DND5E.SpeedConditions"})
+      speed: new SchemaField({
+        value: new NumberField({required: true, min: 0, label: "DND5E.Speed"}),
+        conditions: new StringField({required: true, label: "DND5E.SpeedConditions"})
       }, {label: "DND5E.Speed"}),
-      strength: new foundry.data.fields.NumberField({
+      strength: new NumberField({
         required: true, integer: true, min: 0, label: "DND5E.ItemRequiredStr"
       }),
-      proficient: new foundry.data.fields.NumberField({
+      proficient: new NumberField({
         required: true, min: 0, max: 1, integer: true, initial: null, label: "DND5E.ProficiencyLevel"
       })
     });
   }
+
+  /* -------------------------------------------- */
+
+  /** @inheritdoc */
+  static metadata = Object.freeze(foundry.utils.mergeObject(super.metadata, {
+    enchantable: true,
+    inventoryItem: true,
+    inventoryOrder: 200
+  }, {inplace: false}));
 
   /* -------------------------------------------- */
   /*  Migrations                                  */
@@ -139,8 +152,17 @@ export default class EquipmentData extends ItemDataModel.mixin(
   /** @inheritDoc */
   prepareDerivedData() {
     super.prepareDerivedData();
+    this.armor.value = (this._source.armor.value ?? 0) + (this.magicAvailable ? (this.armor.magicalBonus ?? 0) : 0);
     this.type.label = CONFIG.DND5E.equipmentTypes[this.type.value]
       ?? game.i18n.localize(CONFIG.Item.typeLabels.equipment);
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  prepareFinalData() {
+    this.prepareFinalActivatedEffectData();
+    this.prepareFinalEquippableData();
   }
 
   /* -------------------------------------------- */
@@ -154,7 +176,7 @@ export default class EquipmentData extends ItemDataModel.mixin(
   }
 
   /* -------------------------------------------- */
-  /*  Getters                                     */
+  /*  Properties                                  */
   /* -------------------------------------------- */
 
   /**
@@ -219,29 +241,5 @@ export default class EquipmentData extends ItemDataModel.mixin(
     const actorProfs = actor.system.traits?.armorProf?.value ?? new Set();
     const isProficient = (itemProf === true) || actorProfs.has(itemProf) || actorProfs.has(this.type.baseItem);
     return Number(isProficient);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Does this armor impose disadvantage on stealth checks?
-   * @type {boolean}
-   * @deprecated since DnD5e 3.0, available until DnD5e 3.2
-   */
-  get stealth() {
-    foundry.utils.logCompatibilityWarning(
-      "The `system.stealth` value on equipment has migrated to the 'stealthDisadvantage' property.",
-      { since: "DnD5e 3.0", until: "DnD5e 3.2" }
-    );
-    return this.properties.has("stealthDisadvantage");
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritdoc */
-  get validProperties() {
-    const valid = super.validProperties;
-    if ( this.isArmor ) valid.add("stealthDisadvantage");
-    return valid;
   }
 }

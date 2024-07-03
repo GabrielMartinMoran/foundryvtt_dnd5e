@@ -1,3 +1,6 @@
+import { EnchantmentData } from "../../data/item/fields/enchantment-field.mjs";
+import simplifyRollFormula from "../../dice/simplify-roll-formula.mjs";
+
 /**
  * A specialized Dialog subclass for ability usage.
  *
@@ -30,31 +33,58 @@ export default class AbilityUseDialog extends Dialog {
   /* -------------------------------------------- */
 
   /**
+   * Configuration options for displaying the ability use dialog.
+   *
+   * @typedef {object} AbilityUseDialogOptions
+   * @property {object} [button]
+   * @property {string} [button.icon]     Icon used for the activation button.
+   * @property {string} [button.label]    Label used for the activation button.
+   * @property {string} [disableScaling]  Should spell or resource scaling be disabled?
+   */
+
+  /**
    * A constructor function which displays the Spell Cast Dialog app for a given Actor and Item.
    * Returns a Promise which resolves to the dialog FormData once the workflow has been completed.
-   * @param {Item5e} item                   Item being used.
-   * @param {ItemUseConfiguration} config   The ability use configuration's values.
-   * @returns {Promise}                     Promise that is resolved when the use dialog is acted upon.
+   * @param {Item5e} item                           Item being used.
+   * @param {ItemUseConfiguration} config           The ability use configuration's values.
+   * @param {AbilityUseDialogOptions} [options={}]  Additional options for displaying the dialog.
+   * @returns {Promise}                             Promise that is resolved when the use dialog is acted upon.
    */
-  static async create(item, config) {
+  static async create(item, config, options={}) {
     if ( !item.isOwned ) throw new Error("You cannot display an ability usage dialog for an unowned item");
     config ??= item._getUsageConfig();
-    const slotOptions = config.consumeSpellSlot ? this._createSpellSlotOptions(item.actor, item.system.level) : [];
+
+    const limit = item.actor.system.attributes?.concentration?.limit ?? 0;
+    const concentrationOptions = this._createConcentrationOptions(item);
     const resourceOptions = this._createResourceOptions(item);
+
+    const slotOptions = this._createSpellSlotOptions(item.actor, item.system.level);
+    if ( (item.type === "spell") && (item.system.level > 0) ) {
+      const slot = slotOptions.find(s => s.key === config.slotLevel) ?? slotOptions.find(s => s.canCast);
+      if ( slot ) item = item.clone({ "system.level": slot.level });
+    }
 
     const data = {
       item,
       ...config,
-      slotOptions,
-      resourceOptions,
-      scaling: item.usageScaling,
+      slotOptions: config.consumeSpellSlot ? slotOptions : [],
+      enchantmentOptions: this._createEnchantmentOptions(item),
+      summoningOptions: this._createSummoningOptions(item),
+      resourceOptions: resourceOptions,
+      resourceArray: Array.isArray(resourceOptions),
+      concentration: {
+        show: (config.beginConcentrating !== null) && !!concentrationOptions.length,
+        options: concentrationOptions,
+        optional: (concentrationOptions.length < limit) ? "—" : null
+      },
+      scaling: options.disableScaling ? null : item.usageScaling,
       note: this._getAbilityUseNote(item, config),
       title: game.i18n.format("DND5E.AbilityUseHint", {
         type: game.i18n.localize(CONFIG.Item.typeLabels[item.type]),
         name: item.name
       })
     };
-    this._getAbilityUseWarnings(data);
+    this._getAbilityUseWarnings(data, options);
 
     // Render the ability usage template
     const html = await renderTemplate("systems/dnd5e/templates/apps/ability-use.hbs", data);
@@ -68,8 +98,8 @@ export default class AbilityUseDialog extends Dialog {
         content: html,
         buttons: {
           use: {
-            icon: `<i class="fas ${isSpell ? "fa-magic" : "fa-fist-raised"}"></i>`,
-            label: label,
+            icon: options.button?.icon ?? `<i class="fas ${isSpell ? "fa-magic" : "fa-fist-raised"}"></i>`,
+            label: options.button?.label ?? label,
             callback: html => {
               const fd = new FormDataExtended(html[0].querySelector("form"));
               resolve(fd.object);
@@ -90,6 +120,26 @@ export default class AbilityUseDialog extends Dialog {
   /* -------------------------------------------- */
 
   /**
+   * Create an array of options for which concentration effect to end or replace.
+   * @param {Item5e} item     The item being used.
+   * @returns {object[]}      Array of concentration options.
+   * @private
+   */
+  static _createConcentrationOptions(item) {
+    const { effects } = item.actor.concentration;
+    return effects.reduce((acc, effect) => {
+      const data = effect.getFlag("dnd5e", "itemData");
+      acc.push({
+        name: effect.id,
+        label: data?.name ?? item.actor.items.get(data)?.name ?? game.i18n.localize("DND5E.ConcentratingItemless")
+      });
+      return acc;
+    }, []);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
    * Create an array of spell slot options for a select.
    * @param {Actor5e} actor  The actor with spell slots.
    * @param {number} level   The minimum level.
@@ -97,6 +147,8 @@ export default class AbilityUseDialog extends Dialog {
    * @private
    */
   static _createSpellSlotOptions(actor, level) {
+    if ( !actor.system.spells ) return [];
+
     // Determine the levels which are feasible
     let lmax = 0;
     const options = Array.fromRange(Object.keys(CONFIG.DND5E.spellLevels).length).reduce((arr, i) => {
@@ -104,7 +156,7 @@ export default class AbilityUseDialog extends Dialog {
       const label = CONFIG.DND5E.spellLevels[i];
       const l = actor.system.spells[`spell${i}`] || {max: 0, override: null};
       let max = parseInt(l.override || l.max || 0);
-      let slots = Math.clamped(parseInt(l.value || 0), 0, max);
+      let slots = Math.clamp(parseInt(l.value || 0), 0, max);
       if ( max > 0 ) lmax = i;
       arr.push({
         key: `spell${i}`,
@@ -131,6 +183,66 @@ export default class AbilityUseDialog extends Dialog {
       }
     }
 
+    return options;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create details on enchantment that can be applied.
+   * @param {Item5e} item  The item.
+   * @returns {{ enchantments: object }|null}
+   */
+  static _createEnchantmentOptions(item) {
+    const enchantments = EnchantmentData.availableEnchantments(item);
+    if ( !enchantments.length ) return null;
+    const options = {};
+    if ( enchantments.length > 1 ) options.profiles = Object.fromEntries(enchantments.map(e => [e._id, e.name]));
+    else options.profile = enchantments[0]._id;
+    return options;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Create details on the summoning profiles and other related options.
+   * @param {Item5e} item  The item.
+   * @returns {{ profiles: object, creatureTypes: object }|null}
+   */
+  static _createSummoningOptions(item) {
+    const summons = item.system.summons;
+    if ( !summons?.profiles.length ) return null;
+    const options = {};
+    const rollData = item.getRollData();
+    const level = summons.relevantLevel;
+    options.profiles = Object.fromEntries(
+      summons.profiles
+        .map(profile => {
+          const doc = profile.uuid ? fromUuidSync(profile.uuid) : null;
+          const withinRange = ((profile.level.min ?? -Infinity) <= level) && (level <= (profile.level.max ?? Infinity));
+          if ( !doc || !withinRange ) return null;
+          let label = profile.name ? profile.name : (doc?.name ?? "—");
+          let count = simplifyRollFormula(Roll.replaceFormulaData(profile.count ?? "1", rollData));
+          if ( Number.isNumeric(count) ) {
+            count = parseInt(count);
+            if ( count > 1 ) label = `${count} x ${label}`;
+          } else if ( count ) label = `${count} x ${label}`;
+          return [profile._id, label];
+        })
+        .filter(f => f)
+    );
+    if ( Object.values(options.profiles).length <= 1 ) {
+      options.profile = Object.keys(options.profiles)[0];
+      options.profiles = null;
+    }
+    if ( summons.creatureSizes.size > 1 ) options.creatureSizes = summons.creatureSizes.reduce((obj, k) => {
+      obj[k] = CONFIG.DND5E.actorSizes[k]?.label;
+      return obj;
+    }, {});
+    if ( summons.creatureTypes.size > 1 ) options.creatureTypes = summons.creatureTypes.reduce((obj, k) => {
+      obj[k] = CONFIG.DND5E.creatureTypes[k]?.label;
+      return obj;
+    }, {});
     return options;
   }
 
@@ -176,13 +288,9 @@ export default class AbilityUseDialog extends Dialog {
         target = item.actor;
         if ( ["smallest", "largest"].includes(consume.target) ) {
           label = game.i18n.localize(`DND5E.ConsumeHitDice${consume.target.capitalize()}Long`);
-          value = target.system.attributes.hd;
+          value = target.system.attributes.hd.value;
         } else {
-          value = Object.values(item.actor.classes ?? {}).reduce((acc, cls) => {
-            if ( cls.system.hitDice !== consume.target ) return acc;
-            const hd = cls.system.levels - cls.system.hitDiceUsed;
-            return acc + hd;
-          }, 0);
+          value = item.actor.system.attributes.hd.bySize[consume.target] ?? 0;
           label = `${game.i18n.localize("DND5E.HitDice")} (${consume.target})`;
         }
         break;
@@ -190,6 +298,15 @@ export default class AbilityUseDialog extends Dialog {
     }
 
     if ( !target ) return null;
+
+    const consumesSpellSlot = consume.target.match(/spells\.([^.]+)\.value/);
+    if ( consumesSpellSlot ) {
+      const [, key] = consumesSpellSlot;
+      const spells = item.actor.system.spells[key] ?? {};
+      const level = spells.level || 0;
+      const minimum = (item.type === "spell") ? Math.max(item.system.level, level) : level;
+      return this._createSpellSlotOptions(item.actor, minimum);
+    }
 
     const max = Math.min(cap, value);
     return Array.fromRange(max, 1).reduce((acc, n) => {
@@ -209,6 +326,8 @@ export default class AbilityUseDialog extends Dialog {
    */
   static _getAbilityUseNote(item, config) {
     const { quantity, recharge, uses } = item.system;
+
+    if ( !item.isActive ) return "";
 
     // Zero quantity
     if ( quantity <= 0 ) return game.i18n.localize("DND5E.AbilityUseUnavailableHint");
@@ -233,17 +352,17 @@ export default class AbilityUseDialog extends Dialog {
         value: uses.value,
         quantity: quantity,
         max: uses.max,
-        per: CONFIG.DND5E.limitedUsePeriods[uses.per]
+        per: CONFIG.DND5E.limitedUsePeriods[uses.per]?.label
       });
     }
 
     // Other Items
     else {
-      return game.i18n.format("DND5E.AbilityUseNormalHint", {
+      return game.i18n.format(`DND5E.AbilityUse${uses.value ? "Normal" : "Unavailable"}Hint`, {
         type: game.i18n.localize(CONFIG.Item.typeLabels[item.type]),
         value: uses.value,
         max: uses.max,
-        per: CONFIG.DND5E.limitedUsePeriods[uses.per]
+        per: CONFIG.DND5E.limitedUsePeriods[uses.per]?.label
       });
     }
   }
@@ -252,19 +371,20 @@ export default class AbilityUseDialog extends Dialog {
 
   /**
    * Get the ability usage warnings to display.
-   * @param {object} data  Template data for the AbilityUseDialog. **Will be mutated**
+   * @param {object} data                           Template data for the AbilityUseDialog. **Will be mutated**
+   * @param {AbilityUseDialogOptions} [options={}]  Additional options for displaying the dialog.
    * @private
    */
-  static _getAbilityUseWarnings(data) {
+  static _getAbilityUseWarnings(data, options={}) {
     const warnings = [];
     const item = data.item;
     const { quantity, level, consume, preparation } = item.system;
-    const scale = item.usageScaling;
+    const scale = options.disableScaling ? null : item.usageScaling;
     const levels = [level];
 
     if ( item.type === "spell" ) {
       const spellData = item.actor.system.spells[preparation.mode] ?? {};
-      if ( "level" in spellData ) levels.push(spellData.level);
+      if ( Number.isNumeric(spellData.level) ) levels.push(spellData.level);
     }
 
     if ( (scale === "slot") && data.slotOptions.every(o => !o.hasSlots) ) {
@@ -310,6 +430,15 @@ export default class AbilityUseDialog extends Dialog {
       }
     }
 
+    // Display warnings that the actor cannot concentrate on this item, or if it must replace one of the effects.
+    if ( data.concentration.show ) {
+      const locale = `DND5E.ConcentratingWarnLimit${data.concentration.optional ? "Optional" : ""}`;
+      warnings.push(game.i18n.localize(locale));
+    } else if ( data.beginConcentrating && !item.actor.system.attributes?.concentration?.limit ) {
+      const locale = "DND5E.ConcentratingWarnLimitZero";
+      warnings.push(game.i18n.localize(locale));
+    }
+
     data.warnings = warnings;
   }
 
@@ -328,5 +457,73 @@ export default class AbilityUseDialog extends Dialog {
     if ( !hasUses || !uses.autoDestroy ) return false;
     const value = uses.value - consume;
     return value <= 0;
+  }
+
+  /* -------------------------------------------- */
+  /*  Event Handlers                              */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  activateListeners(jQuery) {
+    super.activateListeners(jQuery);
+    const [html] = jQuery;
+
+    html.querySelector('[name="slotLevel"]')?.addEventListener("change", this._onChangeSlotLevel.bind(this));
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Update summoning profiles when spell slot level is changed.
+   * @param {Event} event  Triggering change event.
+   */
+  _onChangeSlotLevel(event) {
+    const level = this.item.actor?.system.spells?.[event.target.value]?.level;
+    const item = this.item.clone({ "system.level": level ?? this.item.system.level });
+    this._updateProfilesInput(
+      "enchantmentProfile", "DND5E.Enchantment.Label", this.constructor._createEnchantmentOptions(item)
+    );
+    this._updateProfilesInput(
+      "summonsProfile", "DND5E.Summoning.Profile.Label", this.constructor._createSummoningOptions(item)
+    );
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Update enchantment or summoning profiles inputs when the level changes.
+   * @param {string} name                Name of the field to update.
+   * @param {string} label               Localization key for the field's aria label.
+   * @param {object} options
+   * @param {object} [options.profiles]  Profile options to display, if multiple.
+   * @param {string} [options.profile]   Single profile to select, if only one.
+   */
+  _updateProfilesInput(name, label, options) {
+    const originalInput = this.element[0].querySelector(`[name="${name}"]`);
+    if ( !originalInput ) return;
+
+    // If multiple profiles, replace with select element
+    if ( options.profiles ) {
+      const select = document.createElement("select");
+      select.name = name;
+      select.ariaLabel = game.i18n.localize(label);
+      for ( const [id, label] of Object.entries(options.profiles) ) {
+        const option = document.createElement("option");
+        option.value = id;
+        option.innerText = label;
+        if ( id === originalInput.value ) option.selected = true;
+        select.append(option);
+      }
+      originalInput.replaceWith(select);
+    }
+
+    // If only one profile, replace with hidden input
+    else {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = options.profile ?? "";
+      originalInput.replaceWith(input);
+    }
   }
 }

@@ -36,6 +36,7 @@ export default class SpellData extends ItemDataModel.mixin(
         required: true, integer: true, initial: 1, min: 0, label: "DND5E.SpellLevel"
       }),
       school: new foundry.data.fields.StringField({required: true, label: "DND5E.SpellSchool"}),
+      sourceClass: new foundry.data.fields.StringField({label: "DND5E.SpellSourceClass"}),
       properties: new foundry.data.fields.SetField(new foundry.data.fields.StringField(), {
         label: "DND5E.SpellComponents"
       }),
@@ -59,30 +60,6 @@ export default class SpellData extends ItemDataModel.mixin(
         mode: new foundry.data.fields.StringField({required: true, initial: "none", label: "DND5E.ScalingMode"}),
         formula: new FormulaField({required: true, nullable: true, initial: null, label: "DND5E.ScalingFormula"})
       }, {label: "DND5E.LevelScaling"})
-    });
-  }
-
-  /* -------------------------------------------- */
-  /*  Data Preparation                            */
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async getCardData(enrichmentOptions={}) {
-    const context = await super.getCardData(enrichmentOptions);
-    context.isSpell = true;
-    context.subtitle = [this.parent.labels.level, CONFIG.DND5E.spellSchools[this.school]?.label].filterJoin(" &bull; ");
-    return context;
-  }
-
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async getFavoriteData() {
-    return foundry.utils.mergeObject(await super.getFavoriteData(), {
-      subtitle: [this.parent.labels.components.vsm, this.parent.labels.activation],
-      modifier: this.parent.labels.modifier,
-      range: this.range,
-      save: this.save
     });
   }
 
@@ -118,6 +95,46 @@ export default class SpellData extends ItemDataModel.mixin(
   static #migrateScaling(source) {
     if ( !("scaling" in source) ) return;
     if ( (source.scaling.mode === "") || (source.scaling.mode === null) ) source.scaling.mode = "none";
+  }
+
+  /* -------------------------------------------- */
+  /*  Data Preparation                            */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+    this.properties.add("mgc");
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  prepareFinalData() {
+    this.prepareFinalActivatedEffectData();
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async getCardData(enrichmentOptions={}) {
+    const context = await super.getCardData(enrichmentOptions);
+    context.isSpell = true;
+    context.subtitle = [this.parent.labels.level, CONFIG.DND5E.spellSchools[this.school]?.label].filterJoin(" &bull; ");
+    if ( this.parent.labels.components.vsm ) context.tags = [this.parent.labels.components.vsm, ...context.tags];
+    return context;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: [this.parent.labels.components.vsm, this.parent.labels.activation],
+      modifier: this.parent.labels.modifier,
+      range: this.range,
+      save: this.save
+    });
   }
 
   /* -------------------------------------------- */
@@ -158,23 +175,5 @@ export default class SpellData extends ItemDataModel.mixin(
    */
   get proficiencyMultiplier() {
     return 1;
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Provide a backwards compatible getter for accessing `components`.
-   * @deprecated since v3.0.
-   * @type {object}
-   */
-  get components() {
-    foundry.utils.logCompatibilityWarning(
-      "The `system.components` property has been deprecated in favor of a standardized `system.properties` property.",
-      { since: "DnD5e 3.0", until: "DnD5e 3.2", once: true }
-    );
-    return this.properties.reduce((acc, p) => {
-      acc[p] = true;
-      return acc;
-    }, {});
   }
 }

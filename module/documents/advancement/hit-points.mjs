@@ -41,6 +41,7 @@ export default class HitPointsAdvancement extends Advancement {
    * @returns {string}
    */
   get hitDie() {
+    if ( this.actor?.type === "npc" ) return `d${this.actor.system.attributes.hd.denomination}`;
     return this.item.system.hitDice;
   }
 
@@ -145,7 +146,7 @@ export default class HitPointsAdvancement extends Advancement {
   #getApplicableValue(value) {
     const abilityId = CONFIG.DND5E.defaultAbilities.hitPoints || "con";
     value = Math.max(value + (this.actor.system.abilities[abilityId]?.mod ?? 0), 1);
-    value += simplifyBonus(this.actor.system.attributes.hp.bonuses.level, this.actor.getRollData());
+    value += simplifyBonus(this.actor.system.attributes.hp.bonuses?.level, this.actor.getRollData());
     return value;
   }
 

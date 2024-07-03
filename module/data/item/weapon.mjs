@@ -23,6 +23,7 @@ const { NumberField, SetField, StringField } = foundry.data.fields;
  * @mixes ActionTemplate
  * @mixes MountableTemplate
  *
+ * @property {number} magicalBonus     Magical bonus added to attack & damage rolls.
  * @property {Set<string>} properties  Weapon's properties.
  * @property {number} proficient       Does the weapon's owner have proficiency?
  */
@@ -34,12 +35,22 @@ export default class WeaponData extends ItemDataModel.mixin(
   static defineSchema() {
     return this.mergeSchema(super.defineSchema(), {
       type: new ItemTypeField({value: "simpleM", subtype: false}, {label: "DND5E.ItemWeaponType"}),
+      magicalBonus: new NumberField({min: 0, integer: true, label: "DND5E.MagicalBonus"}),
       properties: new SetField(new StringField(), {label: "DND5E.ItemWeaponProperties"}),
       proficient: new NumberField({
         required: true, min: 0, max: 1, integer: true, initial: null, label: "DND5E.ProficiencyLevel"
       })
     });
   }
+
+  /* -------------------------------------------- */
+
+  /** @inheritdoc */
+  static metadata = Object.freeze(foundry.utils.mergeObject(super.metadata, {
+    enchantable: true,
+    inventoryItem: true,
+    inventoryOrder: 100
+  }, {inplace: false}));
 
   /* -------------------------------------------- */
   /*  Data Migrations                             */
@@ -86,6 +97,14 @@ export default class WeaponData extends ItemDataModel.mixin(
   /* -------------------------------------------- */
 
   /** @inheritDoc */
+  prepareFinalData() {
+    this.prepareFinalActivatedEffectData();
+    this.prepareFinalEquippableData();
+  }
+
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
   async getFavoriteData() {
     return foundry.utils.mergeObject(await super.getFavoriteData(), {
       subtitle: CONFIG.DND5E.itemActionTypes[this.actionType],
@@ -125,14 +144,9 @@ export default class WeaponData extends ItemDataModel.mixin(
 
   /** @inheritdoc */
   get _typeAbilityMod() {
-    if ( ["simpleR", "martialR"].includes(this.type.value) ) return "dex";
-
-    const abilities = this.parent?.actor?.system.abilities;
-    if ( this.properties.has("fin") && abilities ) {
-      return (abilities.dex?.mod ?? 0) >= (abilities.str?.mod ?? 0) ? "dex" : "str";
-    }
-
-    return null;
+    const { str, dex } = this.parent?.actor?.system.abilities ?? {};
+    if ( this.properties.has("fin") && str && dex ) return (dex.mod > str.mod) ? "dex" : "str";
+    return { simpleM: "str", martialM: "str", simpleR: "dex", martialR: "dex" }[this.type.value] ?? null;
   }
 
   /* -------------------------------------------- */

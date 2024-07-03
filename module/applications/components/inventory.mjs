@@ -1,3 +1,4 @@
+import Item5e from "../../documents/item.mjs";
 import {parseInputDelta} from "../../utils.mjs";
 import CurrencyManager from "../currency-manager.mjs";
 import ContextMenu5e from "../context-menu.mjs";
@@ -201,16 +202,29 @@ export default class InventoryElement extends HTMLElement {
         icon: "<i class='fas fa-trash fa-fw'></i>",
         condition: () => item.isOwner,
         callback: li => this._onAction(li[0], "delete")
+      },
+      {
+        name: "DND5E.Scroll.CreateScroll",
+        icon: '<i class="fa-solid fa-scroll"></i>',
+        callback: async li => Item5e.create(await Item5e.createScrollFromSpell(item), { parent: this.actor }),
+        condition: li => (item.type === "spell") && this.actor?.isOwner,
+        group: "action"
+      },
+      {
+        name: "DND5E.ConcentrationBreak",
+        icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
+        condition: () => this.actor.concentration?.items.has(item),
+        callback: () => this.actor.endConcentration(item),
+        group: "state"
       }
     ];
 
     if ( !this.actor || (this.actor.type === "group") ) return options;
 
     // Toggle Attunement State
-    if ( ("attunement" in item.system) && (item.system.attunement !== CONFIG.DND5E.attunementTypes.NONE) ) {
-      const isAttuned = item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
+    if ( item.system.attunement ) {
       options.push({
-        name: isAttuned ? "DND5E.ContextMenuActionUnattune" : "DND5E.ContextMenuActionAttune",
+        name: item.system.attuned ? "DND5E.ContextMenuActionUnattune" : "DND5E.ContextMenuActionAttune",
         icon: "<i class='fas fa-sun fa-fw'></i>",
         condition: () => item.isOwner,
         callback: li => this._onAction(li[0], "attune"),
@@ -224,6 +238,15 @@ export default class InventoryElement extends HTMLElement {
       icon: "<i class='fas fa-shield-alt fa-fw'></i>",
       condition: () => item.isOwner,
       callback: li => this._onAction(li[0], "equip"),
+      group: "state"
+    });
+
+    // Toggle Charged State
+    if ( item.system.recharge?.value ) options.push({
+      name: item.system.recharge.charged ? "DND5E.ContextMenuActionExpendCharge" : "DND5E.ContextMenuActionCharge",
+      icon: '<i class="fa-solid fa-bolt"></i>',
+      condition: () => item.isOwner,
+      callback: li => this._onAction(li[0], "toggleCharge"),
       group: "state"
     });
 
@@ -277,7 +300,7 @@ export default class InventoryElement extends HTMLElement {
     const item = await this.getItem(itemId);
     const min = event.target.min !== "" ? Number(event.target.min) : -Infinity;
     const max = event.target.max !== "" ? Number(event.target.max) : Infinity;
-    const value = Math.clamped(event.target.valueAsNumber, min, max);
+    const value = Math.clamp(event.target.valueAsNumber, min, max);
     if ( !item || Number.isNaN(value) ) return;
 
     event.target.value = value;
@@ -292,6 +315,8 @@ export default class InventoryElement extends HTMLElement {
    * @protected
    */
   async _onChangeInputDelta(event) {
+    // If this is already handled by the parent sheet, skip.
+    if ( this.#app?._onChangeInputDelta ) return;
     const input = event.target;
     const itemId = input.closest("[data-item-id]")?.dataset.itemId;
     const item = await this.getItem(itemId);
@@ -316,7 +341,7 @@ export default class InventoryElement extends HTMLElement {
     let value = Number(input.value);
     if ( isNaN(value) ) return;
     value += action === "increase" ? 1 : -1;
-    input.value = Math.clamped(value, min, max);
+    input.value = Math.clamp(value, min, max);
     input.dispatchEvent(new Event("change"));
   }
 
@@ -343,10 +368,7 @@ export default class InventoryElement extends HTMLElement {
 
     switch ( action ) {
       case "attune":
-        const isAttuned = item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
-        return item.update({
-          "system.attunement": CONFIG.DND5E.attunementTypes[isAttuned ? "REQUIRED" : "ATTUNED"]
-        });
+        return item.update({"system.attuned": !item.system.attuned});
       case "create":
         if ( this.document.type === "container" ) return;
         return this._onCreate(target);
@@ -371,6 +393,8 @@ export default class InventoryElement extends HTMLElement {
         return item.update({"system.preparation.prepared": !item.system.preparation?.prepared});
       case "recharge":
         return item.rollRecharge();
+      case "toggleCharge":
+        return item.update({"system.recharge.charged": !item.system.recharge?.charged});
       case "unfavorite":
         return this.actor.system.removeFavorite(item.getRelativeUUID(this.actor));
       case "use":
@@ -386,8 +410,9 @@ export default class InventoryElement extends HTMLElement {
    * @returns {Promise<Item5e>}
    */
   async _onCreate(target) {
-    const dataset = (target.closest(".spellbook-header") ?? target).dataset;
-    const type = dataset.type;
+    const { type, ...dataset } = (target.closest(".spellbook-header") ?? target).dataset;
+    delete dataset.action;
+    delete dataset.tooltip;
 
     // Check to make sure the newly created class doesn't take player over level cap
     if ( type === "class" && (this.actor.system.details.level + 1 > CONFIG.DND5E.maxLevel) ) {
@@ -419,9 +444,8 @@ export default class InventoryElement extends HTMLElement {
       summary.slideUp(200, () => summary.remove());
       this._app._expanded.delete(item.id);
     } else {
-      const enrichment = {secrets: this.document.isOwner};
-      const chatData = item.system.getCardData ? item.system.getCardData(enrichment) : item.getChatData(enrichment);
-      const summary = $(await renderTemplate("systems/dnd5e/templates/items/parts/item-summary.hbs", await chatData));
+      const chatData = await item.getChatData({secrets: this.document.isOwner});
+      const summary = $(await renderTemplate("systems/dnd5e/templates/items/parts/item-summary.hbs", chatData));
       $(li).append(summary.hide());
       summary.slideDown(200);
       this._app._expanded.add(item.id);

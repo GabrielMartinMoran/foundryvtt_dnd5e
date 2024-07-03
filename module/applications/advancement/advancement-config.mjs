@@ -68,7 +68,7 @@ export default class AdvancementConfig extends FormApplication {
   /** @inheritdoc */
   async close(options={}) {
     await super.close(options);
-    delete this.advancement.apps[this.appId];
+    delete this.advancement?.apps[this.appId];
   }
 
   /* -------------------------------------------- */
@@ -79,6 +79,7 @@ export default class AdvancementConfig extends FormApplication {
     if ( ["class", "subclass"].includes(this.item.type) ) delete levels[0];
     else levels[0] = game.i18n.localize("DND5E.AdvancementLevelAnyHeader");
     const context = {
+      appId: this.id,
       CONFIG: CONFIG.DND5E,
       ...this.advancement.toObject(false),
       src: this.advancement.toObject(),
@@ -112,6 +113,10 @@ export default class AdvancementConfig extends FormApplication {
 
     // Remove an item from the list
     if ( this.options.dropKeyPath ) html.on("click", "[data-action='delete']", this._onItemDelete.bind(this));
+
+    for ( const element of html[0].querySelectorAll("multi-select") ) {
+      element.addEventListener("change", this._onChangeInput.bind(this));
+    }
   }
 
   /* -------------------------------------------- */
@@ -142,7 +147,11 @@ export default class AdvancementConfig extends FormApplication {
    */
   static _cleanedObject(object) {
     return Object.entries(object).reduce((obj, [key, value]) => {
-      if ( value ) obj[key] = value;
+      let keep = false;
+      if ( foundry.utils.getType(value) === "Object" ) {
+        keep = Object.values(value).some(v => v);
+      } else if ( value ) keep = true;
+      if ( keep ) obj[key] = value;
       else obj[`-=${key}`] = null;
       return obj;
     }, {});
@@ -164,7 +173,7 @@ export default class AdvancementConfig extends FormApplication {
     if ( !uuidToDelete ) return;
     const items = foundry.utils.getProperty(this.advancement.configuration, this.options.dropKeyPath);
     const updates = { configuration: await this.prepareConfigurationUpdate({
-      [this.options.dropKeyPath]: items.filter(uuid => uuid !== uuidToDelete)
+      [this.options.dropKeyPath]: items.filter(i => i.uuid !== uuidToDelete)
     }) };
     await this.advancement.update(updates);
   }
@@ -207,12 +216,14 @@ export default class AdvancementConfig extends FormApplication {
     }
 
     // Abort if this uuid exists already
-    if ( existingItems.includes(item.uuid) ) {
+    if ( existingItems.find(i => i.uuid === item.uuid) ) {
       ui.notifications.warn("DND5E.AdvancementItemGrantDuplicateWarning", {localize: true});
       return null;
     }
 
-    await this.advancement.update({[`configuration.${this.options.dropKeyPath}`]: [...existingItems, item.uuid]});
+    await this.advancement.update({[`configuration.${this.options.dropKeyPath}`]: [
+      ...existingItems, { uuid: item.uuid }
+    ]});
   }
 
   /* -------------------------------------------- */

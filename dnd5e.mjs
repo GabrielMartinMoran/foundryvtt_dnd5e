@@ -10,7 +10,7 @@
 
 // Import Configuration
 import DND5E from "./module/config.mjs";
-import registerSystemSettings from "./module/settings.mjs";
+import { registerSystemSettings, registerDeferredSettings } from "./module/settings.mjs";
 
 // Import Submodules
 import * as applications from "./module/applications/_module.mjs";
@@ -49,7 +49,13 @@ Hooks.once("init", function() {
   console.log(`D&D 5e | Initializing the D&D Fifth Game System - Version ${dnd5e.version}\n${DND5E.ASCII}`);
 
   // TODO: Remove when v11 support is dropped.
-  CONFIG.compatibility.excludePatterns.push(/Math\.clamped/);
+  CONFIG.compatibility.excludePatterns.push(/filePicker|select/);
+  CONFIG.compatibility.excludePatterns.push(/foundry\.dice\.terms/);
+  CONFIG.compatibility.excludePatterns.push(
+    /aggregateDamageRoll|configureDamage|preprocessFormula|simplifyRollFormula/
+  );
+  CONFIG.compatibility.excludePatterns.push(/core\.sourceId/);
+  if ( game.release.generation < 12 ) Math.clamp = Math.clamped;
 
   // Record Configuration Values
   CONFIG.DND5E = DND5E;
@@ -57,6 +63,8 @@ Hooks.once("init", function() {
   CONFIG.ActiveEffect.legacyTransferral = false;
   CONFIG.Actor.documentClass = documents.Actor5e;
   CONFIG.ChatMessage.documentClass = documents.ChatMessage5e;
+  CONFIG.Combat.documentClass = documents.Combat5e;
+  CONFIG.Combatant.documentClass = documents.Combatant5e;
   CONFIG.Item.collection = dataModels.collection.Items5e;
   CONFIG.Item.compendiumIndexFields.push("system.container");
   CONFIG.Item.documentClass = documents.Item5e;
@@ -88,13 +96,6 @@ Hooks.once("init", function() {
   // Remove honor & sanity from configuration if they aren't enabled
   if ( !game.settings.get("dnd5e", "honorScore") ) delete DND5E.abilities.hon;
   if ( !game.settings.get("dnd5e", "sanityScore") ) delete DND5E.abilities.san;
-
-  // Configure trackable & consumable attributes.
-  _configureTrackableAttributes();
-  _configureConsumableAttributes();
-
-  // Patch Core Functions
-  Combatant.prototype.getInitiativeRoll = documents.combat.getInitiativeRoll;
 
   // Register Roll Extensions
   CONFIG.Dice.rolls.push(dice.D20Roll);
@@ -153,7 +154,7 @@ Hooks.once("init", function() {
   });
   DocumentSheetConfig.registerSheet(JournalEntryPage, "dnd5e", applications.journal.JournalClassPageSheet, {
     label: "DND5E.SheetClassClassSummary",
-    types: ["class"]
+    types: ["class", "subclass"]
   });
   DocumentSheetConfig.registerSheet(JournalEntryPage, "dnd5e", applications.journal.JournalMapLocationPageSheet, {
     label: "DND5E.SheetClassMapLocation",
@@ -162,6 +163,10 @@ Hooks.once("init", function() {
   DocumentSheetConfig.registerSheet(JournalEntryPage, "dnd5e", applications.journal.JournalRulePageSheet, {
     label: "DND5E.SheetClassRule",
     types: ["rule"]
+  });
+  DocumentSheetConfig.registerSheet(JournalEntryPage, "dnd5e", applications.journal.JournalSpellListPageSheet, {
+    label: "DND5E.SheetClassSpellList",
+    types: ["spells"]
   });
 
   CONFIG.Token.prototypeSheetClass = applications.TokenConfig5e;
@@ -197,11 +202,16 @@ function _configureTrackableAttributes() {
     ]
   };
 
+  const altSpells = Object.entries(DND5E.spellPreparationModes).reduce((acc, [k, v]) => {
+    if ( !["prepared", "always"].includes(k) && v.upcast ) acc.push(`spells.${k}`);
+    return acc;
+  }, []);
+
   const creature = {
     bar: [
       ...common.bar,
       "attributes.hp",
-      "spells.pact",
+      ...altSpells,
       ...Array.fromRange(Object.keys(DND5E.spellLevels).length - 1, 1).map(l => `spells.spell${l}`)
     ],
     value: [
@@ -239,6 +249,11 @@ function _configureTrackableAttributes() {
  * @internal
  */
 function _configureConsumableAttributes() {
+  const altSpells = Object.entries(DND5E.spellPreparationModes).reduce((acc, [k, v]) => {
+    if ( !["prepared", "always"].includes(k) && v.upcast ) acc.push(`spells.${k}.value`);
+    return acc;
+  }, []);
+
   CONFIG.DND5E.consumableResources = [
     ...Object.keys(DND5E.abilities).map(ability => `abilities.${ability}.value`),
     "attributes.ac.flat",
@@ -249,7 +264,7 @@ function _configureConsumableAttributes() {
     "details.xp.value",
     "resources.primary.value", "resources.secondary.value", "resources.tertiary.value",
     "resources.legact.value", "resources.legres.value",
-    "spells.pact.value",
+    ...altSpells,
     ...Array.fromRange(Object.keys(DND5E.spellLevels).length - 1, 1).map(level => `spells.spell${level}.value`)
   ];
 }
@@ -298,9 +313,15 @@ function _configureFonts() {
  * Configure system status effects.
  */
 function _configureStatusEffects() {
-  const addEffect = (effects, data) => {
+  const addEffect = (effects, {special, ...data}) => {
+    data = foundry.utils.deepClone(data);
+    data._id = utils.staticID(`dnd5e${data.id}`);
+    if ( foundry.utils.isNewerVersion(game.version, 12) ) {
+      data.img = data.icon ?? data.img;
+      delete data.icon;
+    }
     effects.push(data);
-    if ( "special" in data ) CONFIG.specialStatusEffects[data.special] = data.id;
+    if ( special ) CONFIG.specialStatusEffects[special] = data.id;
   };
   CONFIG.statusEffects = Object.entries(CONFIG.DND5E.statusEffects).reduce((arr, [id, data]) => {
     const original = CONFIG.statusEffects.find(s => s.id === id);
@@ -309,6 +330,9 @@ function _configureStatusEffects() {
   }, []);
   for ( const [id, {label: name, ...data}] of Object.entries(CONFIG.DND5E.conditionTypes) ) {
     addEffect(CONFIG.statusEffects, { id, name, ...data });
+  }
+  for ( const [id, data] of Object.entries(CONFIG.DND5E.encumbrance.effects) ) {
+    addEffect(CONFIG.statusEffects, { id, ...data, hud: false });
   }
 }
 
@@ -320,10 +344,17 @@ function _configureStatusEffects() {
  * Prepare attribute lists.
  */
 Hooks.once("setup", function() {
+  // Configure trackable & consumable attributes.
+  _configureTrackableAttributes();
+  _configureConsumableAttributes();
+
   CONFIG.DND5E.trackableAttributes = expandAttributeList(CONFIG.DND5E.trackableAttributes);
   game.dnd5e.moduleArt.registerModuleArt();
   Tooltips5e.activateListeners();
   game.dnd5e.tooltips.observe();
+
+  // Register settings after modules have had a chance to initialize
+  registerDeferredSettings();
 
   // Apply table of contents compendium style if specified in flags
   game.packs
@@ -335,8 +366,7 @@ Hooks.once("setup", function() {
     .forEach(p => p.applicationClass = applications.item.ItemCompendium5e);
 
   // Configure token rings
-  CONFIG.DND5E.tokenRings.shaderClass ??= game.release.generation < 12
-    ? canvas.TokenRingSamplerShaderV11 : canvas.TokenRingSamplerShader;
+  CONFIG.DND5E.tokenRings.shaderClass ??= canvas.TokenRingSamplerShaderV11;
   CONFIG.Token.ringClass.initialize();
 });
 
@@ -401,8 +431,10 @@ Hooks.once("ready", function() {
 /* -------------------------------------------- */
 
 Hooks.on("canvasInit", gameCanvas => {
-  gameCanvas.grid.diagonalRule = game.settings.get("dnd5e", "diagonalMovement");
-  SquareGrid.prototype.measureDistances = canvas.measureDistances;
+  if ( game.release.generation < 12 ) {
+    gameCanvas.grid.diagonalRule = game.settings.get("dnd5e", "diagonalMovement");
+    SquareGrid.prototype.measureDistances = canvas.measureDistances;
+  }
   CONFIG.Token.ringClass.pushToLoad(gameCanvas.loadTexturesOptions.additionalSources);
 });
 
@@ -479,12 +511,16 @@ Hooks.on("renderChatLog", (app, html, data) => {
 });
 Hooks.on("renderChatPopout", (app, html, data) => documents.Item5e.chatListeners(html));
 
-Hooks.on("chatMessage", (app, message, data) => dnd5e.applications.Award.chatMessage(message));
+Hooks.on("chatMessage", (app, message, data) => applications.Award.chatMessage(message));
 
 Hooks.on("renderActorDirectory", (app, html, data) => documents.Actor5e.onRenderActorDirectory(html));
 Hooks.on("getActorDirectoryEntryContext", documents.Actor5e.addDirectoryContextOptions);
 
-Hooks.on("applyTokenStatusEffect", canvas.Token5e.onApplyTokenStatusEffect);
+Hooks.on("getCompendiumEntryContext", documents.Item5e.addCompendiumContextOptions);
+Hooks.on("getItemDirectoryEntryContext", documents.Item5e.addDirectoryContextOptions);
+
+Hooks.on("renderJournalPageSheet", applications.journal.JournalSheet5e.onRenderJournalPageSheet);
+
 Hooks.on("targetToken", canvas.Token5e.onTargetToken);
 
 /* -------------------------------------------- */

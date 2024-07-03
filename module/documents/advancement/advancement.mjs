@@ -160,8 +160,8 @@ export default class Advancement extends BaseAdvancement {
    */
   get appliesToClass() {
     const originalClass = this.item.isOriginalClass;
-    return (originalClass === null) || !this.classRestriction
-      || (this.classRestriction === "primary" && originalClass)
+    return !this.classRestriction
+      || (this.classRestriction === "primary" && [true, null].includes(originalClass))
       || (this.classRestriction === "secondary" && !originalClass);
   }
 
@@ -340,4 +340,21 @@ export default class Advancement extends BaseAdvancement {
    */
   async reverse(level) { }
 
+  /* -------------------------------------------- */
+
+  /**
+   * Fetch an item and create a clone with the proper flags.
+   * @param {string} uuid  UUID of the item to fetch.
+   * @param {string} [id]  Optional ID to use instead of a random one.
+   * @returns {object|null}
+   */
+  async createItemData(uuid, id) {
+    const source = await fromUuid(uuid);
+    if ( !source ) return null;
+    return source.clone({
+      _id: id ?? foundry.utils.randomID(),
+      "flags.dnd5e.sourceId": uuid,
+      "flags.dnd5e.advancementOrigin": `${this.item.id}.${this.id}`
+    }, {keepId: true}).toObject();
+  }
 }

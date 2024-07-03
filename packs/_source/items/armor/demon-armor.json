@@ -15,7 +15,10 @@
       "license": "CC-BY-4.0"
     },
     "quantity": 1,
-    "weight": 65,
+    "weight": {
+      "value": 65,
+      "units": "lb"
+    },
     "price": {
       "value": 8000,
       "denomination": "gp"
@@ -62,7 +65,6 @@
     },
     "ability": "str",
     "actionType": "mwak",
-    "attackBonus": "1",
     "chatFlavor": "",
     "critical": {
       "threshold": null,
@@ -84,8 +86,9 @@
       "scaling": "spell"
     },
     "armor": {
-      "value": 19,
-      "dex": 0
+      "value": 18,
+      "dex": 0,
+      "magicalBonus": 1
     },
     "hp": {
       "value": 0,
@@ -110,7 +113,13 @@
     "properties": [
       "mgc",
       "stealthDisadvantage"
-    ]
+    ],
+    "attack": {
+      "bonus": "1",
+      "flat": false
+    },
+    "summons": null,
+    "enchantment": null
   },
   "effects": [],
   "folder": "JqTP017wj3uxDJ8g",
@@ -121,10 +130,10 @@
   "flags": {},
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.0.1",
+    "systemVersion": "3.2.0",
     "coreVersion": "11.315",
     "createdTime": 1661787233789,
-    "modifiedTime": 1707055845233,
+    "modifiedTime": 1715374628801,
     "lastModifiedBy": "dnd5ebuilder0000"
   },
   "_key": "!items!ejEt6hLQxOux04lS"
