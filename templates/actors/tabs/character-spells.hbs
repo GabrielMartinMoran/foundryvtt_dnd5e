@@ -78,7 +78,7 @@
             </div>
 
             {{!-- Spell Slots --}}
-            {{#if usesSlots}}
+            {{#if (and usesSlots (or (not @root.useSpellPoints) (ifContains label 'Pact')))}}
             <div class="pips" data-prop="system.spells.{{ prop }}.value">
                 {{#each pips}}
                 <button type="button" class="{{ classes }}" data-n="{{ n }}" data-tooltip="{{ tooltip }}"

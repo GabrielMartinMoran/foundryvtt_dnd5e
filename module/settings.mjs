@@ -337,6 +337,16 @@ export function registerSystemSettings() {
     type: Boolean,
     default: true
   });
+
+    // Use spell points
+    game.settings.register("dnd5e", "useSpellPoints", {
+      name: "SETTINGS.5eUseSpellPointsN",
+      hint: "SETTINGS.5eUseSpellPointsL",
+      scope: "world",
+      config: true,
+      default: false,
+      type: Boolean
+    });
 }
 
 /**

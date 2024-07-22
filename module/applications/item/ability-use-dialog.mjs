@@ -82,7 +82,8 @@ export default class AbilityUseDialog extends Dialog {
       title: game.i18n.format("DND5E.AbilityUseHint", {
         type: game.i18n.localize(CONFIG.Item.typeLabels[item.type]),
         name: item.name
-      })
+      }),
+      useSpellPoints: game.settings.get("dnd5e", "useSpellPoints")
     };
     this._getAbilityUseWarnings(data, options);
 

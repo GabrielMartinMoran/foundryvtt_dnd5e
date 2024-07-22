@@ -2154,6 +2154,19 @@
   "DND5E.GreenCircleEffect": "◌ Green Circle ◌",
   "DND5E.RedCircleEffect": "◌ Red Circle ◌",
   "DND5E.WhiteCircleEffect": "◌ White Circle ◌",
-  "DND5E.YellowCircleEffect": "◌ Yellow Circle ◌"
+  "DND5E.YellowCircleEffect": "◌ Yellow Circle ◌",
+
+  "SETTINGS.5eUseSpellPointsN": "Use Spell Points",
+  "SETTINGS.5eUseSpellPointsL": "Checking this just disables spell slots from the character sheet, but it doesn't implement spell points.",
+  "DND5E.SpellLevel0SpellPointsCost": "",
+  "DND5E.SpellLevel1SpellPointsCost": "(2 Spell Points)",
+  "DND5E.SpellLevel2SpellPointsCost": "(3 Spell Points)",
+  "DND5E.SpellLevel3SpellPointsCost": "(5 Spell Points)",
+  "DND5E.SpellLevel4SpellPointsCost": "(6 Spell Points)",
+  "DND5E.SpellLevel5SpellPointsCost": "(7 Spell Points)",
+  "DND5E.SpellLevel6SpellPointsCost": "(9 Spell Points)",
+  "DND5E.SpellLevel7SpellPointsCost": "(10 Spell Points)",
+  "DND5E.SpellLevel8SpellPointsCost": "(11 Spell Points)",
+  "DND5E.SpellLevel9SpellPointsCost": "(13 Spell Points)"
   }
   

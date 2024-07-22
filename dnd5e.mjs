@@ -524,6 +524,18 @@ Hooks.on("renderJournalPageSheet", applications.journal.JournalSheet5e.onRenderJ
 Hooks.on("targetToken", canvas.Token5e.onTargetToken);
 
 /* -------------------------------------------- */
+/*  Handlebars custom helpers                   */
+/* -------------------------------------------- */
+
+Handlebars.registerHelper('ifContains', function (source, subString) {
+  return source.indexOf(subString) > -1;
+});
+
+Handlebars.registerHelper('isEquals', function (a, b) {
+  return a === b;
+});
+
+/* -------------------------------------------- */
 /*  Bundled Module Exports                      */
 /* -------------------------------------------- */
 
