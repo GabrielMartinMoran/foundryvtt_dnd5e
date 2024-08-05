@@ -2683,7 +2683,7 @@ DND5E.conditionTypes = {
     icon: "systems/dnd5e/icons/svg/statuses/exhaustion.svg",
     reference:
       "Compendium.dnd5e.rules.JournalEntry.w7eitkpD7QQTB6j0.JournalEntryPage.cspWveykstnu3Zcv",
-    levels: 10,
+    levels: 6,
   },
   frightened: {
     label: "DND5E.ConFrightened",
