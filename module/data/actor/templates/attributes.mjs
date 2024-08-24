@@ -271,6 +271,10 @@ export default class AttributesFields {
       let speed = this.attributes.movement[type];
       if ( noMovement || (crawl && (type !== "walk")) ) speed = 0;
       else {
+        
+        // Update speed based on exhaustion
+        speed = Math.max(0, speed - (this.attributes.exhaustion * 5));
+
         if ( halfMovement ) speed *= 0.5;
         if ( heavilyEncumbered ) {
           speed = Math.max(0, speed - (CONFIG.DND5E.encumbrance.speedReduction.heavilyEncumbered[units] ?? 0));
@@ -280,6 +284,8 @@ export default class AttributesFields {
         if ( exceedingCarryingCapacity ) {
           speed = Math.min(speed, CONFIG.DND5E.encumbrance.speedReduction.exceedingCarryingCapacity[units] ?? 0);
         }
+
+        
       }
       this.attributes.movement[type] = speed;
     }

@@ -247,11 +247,6 @@ export default class ActorSheet5e extends ActorSheetMixin(ActorSheet) {
   _getMovementSpeed(systemData, largestPrimary = false) {
     const movement = systemData.attributes.movement ?? {};
 
-    for (let speed of ['walk']) {
-      movement[speed] -= (systemData.attributes.exhaustion * 5);
-      if (movement[speed] < 0) movement[speed] = 0;
-    }
-
     // Prepare an array of available movement speeds
     let speeds = [
       [movement.burrow, `${game.i18n.localize("DND5E.MovementBurrow")} ${movement.burrow}`],
