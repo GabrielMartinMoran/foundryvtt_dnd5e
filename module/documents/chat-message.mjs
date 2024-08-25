@@ -342,19 +342,35 @@ export default class ChatMessage5e extends ChatMessage {
     evaluation.classList.add("dnd5e2", "evaluation");
     evaluation.innerHTML = targets.map(({ name, img, ac, uuid }) => {
       const isMiss = !attackRoll.isCritical && ((attackRoll.total < ac) || attackRoll.isFumble);
+
+      const INCREMENTS_FACTOR = 5;
+      const damageIncrements = Math.floor(Math.max(0, attackRoll.total - ac) / INCREMENTS_FACTOR);
+      const incrementFormula = `${damageIncrements}${attackRoll.isCritical ? 'd6' : 'd4'}`;
+      const incrementsHTML = damageIncrements > 0 ? `
+        <div class="increments">
+        +${damageIncrements} incremento${damageIncrements > 1 ? 's' : ''} (
+        <span class="roll-link" data-type="damage" data-formula="${incrementFormula}" data-damage-type="force"><a data-action="roll"><i class="fa-solid fa-dice-d20"></i>${incrementFormula}</a></span>
+        )
+        </div>
+      `:'';
+      
+
       return [`
         <li data-uuid="${uuid}" class="target ${isMiss ? "miss" : "hit"}">
-          <img src="${img}" alt="${name}">
-          <div class="name-stacked">
-            <span class="title">
-              ${name}
-              <i class="fas ${isMiss ? "fa-times" : "fa-check"}"></i>
-            </span>
+          <div class="target-container">
+            <img src="${img}" alt="${name}">
+            <div class="name-stacked">
+              <span class="title">
+                ${name}
+                <i class="fas ${isMiss ? "fa-times" : "fa-check"}"></i>
+              </span>
+            </div>          
+            <div class="ac">
+              <i class="fas fa-shield-halved"></i>
+              <span>${ac}</span>       
+            </div>        
           </div>
-          <div class="ac">
-            <i class="fas fa-shield-halved"></i>
-            <span>${ac}</span>
-          </div>
+          ${incrementsHTML}
         </li>
       `, isMiss];
     }).sort((a, b) => (a[1] === b[1]) ? 0 : a[1] ? 1 : -1).reduce((str, [li]) => str + li, "");
